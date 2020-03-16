@@ -1,6 +1,6 @@
 <template>
   <div>
-    App
+    App应用根组件
   </div>
 </template>
 
