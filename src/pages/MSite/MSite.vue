@@ -1,12 +1,12 @@
 <template>
   <div>
-    App
+    MSite
   </div>
 </template>
 
 <script>
   export default {
-    name: 'App'
+    name: 'MSite'
   }
 </script>
 

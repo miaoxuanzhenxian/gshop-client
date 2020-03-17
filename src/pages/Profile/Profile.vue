@@ -1,12 +1,12 @@
 <template>
   <div>
-    App
+    Profile
   </div>
 </template>
 
 <script>
   export default {
-    name: 'App'
+    name: 'Profile'
   }
 </script>
 

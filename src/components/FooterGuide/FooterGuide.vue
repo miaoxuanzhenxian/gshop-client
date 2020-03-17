@@ -1,12 +1,12 @@
 <template>
   <div>
-    App
+    FooterGuide
   </div>
 </template>
 
 <script>
   export default {
-    name: 'App'
+    name: 'FooterGuide'
   }
 </script>
 
