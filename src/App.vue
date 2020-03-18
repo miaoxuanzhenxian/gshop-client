@@ -1,15 +1,20 @@
 <template>
-  <div>
+  <div id="app">
     App
+    <Button>test</Button>
   </div>
 </template>
 
 <script>
+  import { Button } from 'mint-ui'
   export default {
-    name: 'App'
+    name: 'App',
+    components: {
+      Button
+    }
   }
 </script>
 
-<style lang="stylus" rel="stylesheet/stylus" scoped>
+<style lang="stylus" rel="stylesheet/stylus">
   
 </style>
