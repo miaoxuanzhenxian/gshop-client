@@ -13,5 +13,22 @@
     </noscript>
     <div id="app"></div>
     <!-- built files will be auto injected -->
+    
+    <!-- 用于使得手机端浏览器能有控制台,打包为生产环境、项目上线前要去掉，不需要 -->
+    <script src="//cdn.jsdelivr.net/npm/eruda"></script>
+    <script>
+      eruda.init()
+    </script>
+
+    <!-- 使用viewport-units-buggyfill库配合postcss-viewport-units插件(postcss-viewport-units插件主要是给CSS的属性添加content的属性)给vw、vh、vmin和vmax做兼容性的处理 -->
+    <!-- <script src="//g.alicdn.com/fdilab/lib3rd/viewport-units-buggyfill/0.6.2/??viewport-units-buggyfill.hacks.min.js,viewport-units-buggyfill.min.js"></script> --> <!-- 在线地址 -->
+    <script src="/js/viewport-units-buggyfill.min.js"></script> <!-- 本地地址 -->
+    <script>
+      window.onload = function () {
+        window.viewportUnitsBuggyfill && window.viewportUnitsBuggyfill.init({
+          hacks: window.viewportUnitsBuggyfillHacks
+        })
+      }
+    </script>
   </body>
 </html>
