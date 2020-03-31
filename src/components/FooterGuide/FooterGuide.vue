@@ -1,29 +1,29 @@
 <template>
   <footer class="footer-guide border-1px">
-    <span class="guide-item">
+    <router-link to="/msite" exact tag="span" class="guide-item" active-class="on">
       <span>
         <i class="iconfont icon-waimai"></i>
       </span>
       <span>外卖</span>
-    </span>
-    <span class="guide-item">
+    </router-link>
+    <router-link to="/search" exact tag="span" class="guide-item" active-class="on">
       <span>
         <i class="iconfont icon-search"></i>
       </span>
       <span>搜索</span>
-    </span>
-    <span class="guide-item">
+    </router-link>
+    <router-link to="/order" exact tag="span" class="guide-item" active-class="on">
       <span>
         <i class="iconfont icon-dingdan"></i>
       </span>
       <span>订单</span>
-    </span>
-    <span class="guide-item">
+    </router-link>
+    <router-link to="/profile" exact tag="span" class="guide-item" active-class="on">
       <span>
         <i class="iconfont icon-geren"></i>
       </span>
       <span>我的</span>
-    </span>
+    </router-link>
   </footer>
 </template>
 
@@ -54,6 +54,8 @@
       justify-content center
       margin 5px
       color #999999
+      &.on
+        color #02a774
       span
         font-size 12px
         margin-top 2px

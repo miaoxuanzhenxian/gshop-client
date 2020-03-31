@@ -202,6 +202,7 @@ img {
   border: none;
 }
 .border-1px::before {
+  z-index: -100;
   content: '';
   position: absolute;
   width: 100%;
