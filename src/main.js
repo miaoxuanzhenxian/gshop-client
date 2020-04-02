@@ -8,13 +8,15 @@ import './assets/styles/reset.css'
 Vue.config.productionTip = false
 
 
-/* 解决引入使用fastclick插件库后在苹果浏览器上输入框(包括input和textarea)点击无响应(响应难、响应慢)问题的bug，即会产生输入框(包括input和textarea)点击无法获取焦点问题(或获取焦点难、获取焦点慢的问题)，只有双击或者长按的时候才能使input或textarea输入框获取到焦点的bug */
+/* 解决引入使用fastclick插件库后在苹果浏览器上输入框(包括input和textarea)点击无响应问题的bug，即会产生输入框(包括input和textarea)点击无法获取焦点问题，只有双击或者长按的时候才能使input或textarea输入框获取到焦点的bug */
 FastClick.prototype.focus = function(targetElement) {
   let length
   const isIOS = !!navigator.userAgent.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/) // 去获取当前系统是否为ios,继续执行判断
+  // 兼容处理:在iOS7中，有一些元素（如date、datetime、month等）在setSelectionRange会出现TypeError
+  // 这是因为这些元素并没有selectionStart和selectionEnd的整型数字属性，所以一旦引用就会报错，因此排除这些属性才使用setSelectionRange方法
   if ( isIOS && targetElement.setSelectionRange && targetElement.type.indexOf('date') !== 0 && targetElement.type !== 'time' && targetElement.type !== 'month') {
     length = targetElement.value.length
-    targetElement.focus()
+    targetElement.focus() // 修复bug ios 11.3不弹出键盘，这里加上聚焦代码，让其强制聚焦弹出键盘
     targetElement.setSelectionRange(length, length)
   } else {
     targetElement.focus()
