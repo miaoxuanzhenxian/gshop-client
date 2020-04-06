@@ -1,12 +1,15 @@
 /*
   配置应用中所有路由
 */
-import MSite from '../pages/MSite/MSite'
-import Search from '../pages/Search/Search'
-import Order from '../pages/Order/Order'
-import Profile from '../pages/Profile/Profile'
-import NotFound from '../pages/NotFound/NotFound'
+import lazyLoadView from '../utils/lazyLoadView'
 
+
+// 路由的懒加载，解决首屏加载过慢的问题
+const MSite = () => lazyLoadView(import('../pages/MSite/MSite'))
+const Search = () => lazyLoadView(import('../pages/Search/Search'))
+const Order = () => lazyLoadView(import('../pages/Order/Order'))
+const Profile = () => lazyLoadView(import('../pages/Profile/Profile'))
+const NotFound = () => lazyLoadView(import('../pages/NotFound/NotFound'))
 
 export default [
   {
