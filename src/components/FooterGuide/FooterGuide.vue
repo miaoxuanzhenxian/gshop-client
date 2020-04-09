@@ -45,7 +45,7 @@
     height 50px
     display flex
     &::before
-      border-top 1px solid #e4e4e4
+      border-top 1px solid red
     .guide-item
       flex 1
       text-align center
