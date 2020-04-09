@@ -187,7 +187,7 @@
       height 200px
       background-color #fff
       &::before
-        border-bottom 1px solid red
+        border-bottom 1px solid #e4e4e4
       .swiper-container
         width 100%
         height 100%
