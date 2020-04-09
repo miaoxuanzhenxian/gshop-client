@@ -214,7 +214,7 @@ img {
   left: 0;
   box-sizing: border-box;
   transform-origin: left top;
-  pointer-events: none; /* 因边框是由伪元素区域遮盖在父级,故子级若有交互(如点击等)，需要对子级设置定位 或 z-index或设置pointer-events为none，其表示元素永远不会成为鼠标事件的target。*/
+  pointer-events: none; /* 因边框是由伪元素区域遮盖在父级,故子级若有交互(如点击等)，需要对子级设置定位 或 z-index或设置pointer-events为none，其表示该元素永远不会成为鼠标事件的target。*/
 }
 @media only screen and (-webkit-min-device-pixel-ratio: 2) {
   .border-1px::before{
