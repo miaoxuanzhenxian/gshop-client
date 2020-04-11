@@ -18,7 +18,7 @@ module.exports = {
       exclude: /(\/|\\)(node_modules)(\/|\\)/  // 将node_modules目录排除掉，即不会受影响,node_modules目录中的不会转为vw
     },
     "postcss-viewport-units": { // postcss-viewport-units配合viewport-units-buggyfill库做vw兼容方案
-      filterRule: rule => rule.selector.indexOf('::after') === -1 && rule.selector.indexOf('::before') === -1 && rule.selector.indexOf(':after') === -1 && rule.selector.indexOf(':before') === -1
+      filterRule: rule => rule.selector.indexOf('::after') === -1 && rule.selector.indexOf('::before') === -1 && rule.selector.indexOf(':after') === -1 && rule.selector.indexOf(':before') === -1 // 过滤掉伪元素选择器::before、::after
     },
     "cssnano": {
       preset: "advanced",
