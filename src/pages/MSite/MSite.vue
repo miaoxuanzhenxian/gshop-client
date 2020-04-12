@@ -1,7 +1,7 @@
 <template>
   <section class="msite">
     <!-- 首页头部 -->
-    <header class="msite-header">
+    <header class="header">
       <span class="header-search">
         <i class="iconfont icon-sousuo"></i>
       </span>
@@ -335,7 +335,7 @@
   .msite
     width 100%
     background-color #f5f5f5
-    .msite-header
+    .header
       position fixed
       z-index 100
       left 0
