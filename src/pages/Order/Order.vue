@@ -31,6 +31,7 @@
       background-color #02a774
       width 100%
       height 45px
+      color #fff
       .header-search
         position absolute
         left 15px
@@ -40,7 +41,6 @@
         height 50%
         .icon-sousuo
           font-size 25px
-          color #fff
       .header-title
         position absolute
         left 50%
@@ -50,11 +50,9 @@
         text-align center
         .header-title-text
           font-size 20px
-          color #fff
           display block
       .header-login
         font-size 14px
-        color #fff
         position absolute
         right 15px
         top 50%
