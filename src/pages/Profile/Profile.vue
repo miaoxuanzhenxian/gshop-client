@@ -174,7 +174,7 @@
               font-size 14px
               color #666
               padding-bottom 10px
-          &:neth-of-type(2)
+          &:nth-of-type(2)
             .property-link
               .property-link-top
                 span
