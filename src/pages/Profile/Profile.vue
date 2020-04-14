@@ -65,14 +65,14 @@
 <style lang="stylus" rel="stylesheet/stylus" scoped>
   .profile
     width 100%
-    background-color #f5f5f5
+    margin-bottom 50px
     .header
       position fixed
       z-index 100
       left 0
       right 0
       top 0
-      background-color #02a774
+      background #02a774
       width 100%
       height 45px
       color #fff
@@ -107,7 +107,7 @@
         position relative
         color #fff
         display block
-        background-color #02a774
+        background #02a774
         padding 20px 10px
         .user-avatar
           float left
@@ -118,7 +118,7 @@
           .icon-person
             font-size 62px
             color #7e8c8d
-            background-color #e4e4e4
+            background #e4e4e4
         .user-info
           float left
           margin-top 8px

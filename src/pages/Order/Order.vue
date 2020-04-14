@@ -22,13 +22,14 @@
 <style lang="stylus" rel="stylesheet/stylus" scoped>
   .order
     width 100%
+    margin-bottom 50px
     .header
       position fixed
       z-index 100
       left 0
       right 0
       top 0
-      background-color #02a774
+      background #02a774
       width 100%
       height 45px
       color #fff
@@ -70,7 +71,7 @@
         font-size 17px
         color #6a6a6a
       >button
-        background-color #02a774
+        background #02a774
         font-size 14px
         color #fff
         padding 10px 20px

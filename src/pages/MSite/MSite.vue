@@ -334,14 +334,14 @@
 
   .msite
     width 100%
-    background-color #f5f5f5
+    margin-bottom 50px
     .header
       position fixed
       z-index 100
       left 0
       right 0
       top 0
-      background-color #02a774
+      background #02a774
       width 100%
       height 45px
       color #fff
@@ -373,7 +373,7 @@
     .msite-nav
       margin-top 45px
       height 200px
-      background-color #fff
+      background #fff
       &::before
         height 1px
         top 100%
@@ -409,7 +409,7 @@
             background #02a774
     .msite-shop-list
       margin-top 10px
-      background-color #fff
+      background #fff
       &::before
         height 1px
         border-top 1px solid #e4e4e4
@@ -421,7 +421,7 @@
           line-height 20px
           margin-left 5px
       .shop-container
-        margin-bottom 50px
+        min-height 1px
         .shop-list
           .shop-li
             width 100%
@@ -453,14 +453,14 @@
                     width 200px
                     color #333
                     font-size 16px
-                    line-height 16px
+                    line-height 18px
                     font-weight 700
                     &::before
                       content '品牌'
                       display inline-block
                       font-size 11px
                       line-height 11px
-                      background-color #ffd930
+                      background #ffd930
                       padding 2px
                       border-radius 2px
                       margin-right 5px
@@ -477,7 +477,7 @@
                       border-radius 2px
                 .shop-info-brief
                   width 100%
-                  margin-top 18px
+                  margin-top 17px
                   margin-bottom 12px
                   .info-brief-left
                     float left

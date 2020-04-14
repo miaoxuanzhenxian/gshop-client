@@ -9,7 +9,7 @@
     name: 'LoadingError',
     methods: {
       retry () {
-        this.$router.go(0)
+        location.reload()
       }
     }
   }
