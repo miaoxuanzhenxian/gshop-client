@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <router-view v-if="isRouterAlive" />
+    <router-view />
     <FooterGuide />
   </div>
 </template>
@@ -11,25 +11,6 @@
     name: 'App',
     components: {
       FooterGuide
-    },
-    provide () {
-      return {
-        reload: this.reload
-      }
-    },
-    data () {
-      return {
-        isRouterAlive: true
-      }
-    },
-    methods: {
-      reload () {
-        console.log('reload')
-        this.isRouterAlive = false
-        this.$nextTick(function() {
-          this.isRouterAlive = true
-        })
-      }
     }
   }
 </script>
