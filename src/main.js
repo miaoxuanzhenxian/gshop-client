@@ -3,10 +3,14 @@ import FastClick from 'fastclick' // 解决移动端浏览器上点击(click)响
 
 import App from './App'
 import router from './router'
+import Header from './components/Header/Header'
 import './assets/styles/reset.css'
 
 Vue.config.productionTip = false
 
+
+// 注册全局组件
+Vue.component('Header', Header)
 
 /* 解决引入使用fastclick插件库后在苹果移动端浏览器上输入框(包括input和textarea)点击无响应问题的bug，即会产生输入框(包括input和textarea)点击无法获取焦点问题，只有双击或者长按的时候才能使input或textarea输入框获取到焦点的bug */
 FastClick.prototype.focus = function(targetElement) {
