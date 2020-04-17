@@ -13,7 +13,7 @@
           <div class="on">
             <section class="login-message">
               <input type="tel" maxlength="11" placeholder="手机号">
-              <button disabled="disabled" class="get-verification">获取验证码</button>
+              <button disabled="disabled" class="get-verification btn">获取验证码</button>
             </section>
             <section class="login-message">
               <input type="tel" maxlength="8" placeholder="短信验证码">
@@ -36,7 +36,7 @@
             </section>
             <section class="login-message">
               <input type="text" maxlength="8" placeholder="验证码">
-              <img class="get-verification" src="./images/captcha.svg" alt="captcha">
+              <img class="get-verification img-captcha" src="./images/captcha.svg" alt="captcha">
             </section>
           </div>
           <button class="login-submit">登录</button>
@@ -111,6 +111,11 @@
                 font-size 14px
                 color #ccc
                 background transparent
+                &.btn
+                  outline none
+                &.img-captcha
+                  width 150px
+                  height 48px
               .switch-button
                 font-size 12px
                 border 1px solid #ddd
