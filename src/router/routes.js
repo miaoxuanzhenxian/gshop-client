@@ -9,6 +9,7 @@ const MSite = () => lazyLoadView(import('../pages/MSite/MSite'))
 const Search = () => lazyLoadView(import('../pages/Search/Search'))
 const Order = () => lazyLoadView(import('../pages/Order/Order'))
 const Profile = () => lazyLoadView(import('../pages/Profile/Profile'))
+const Login = () => lazyLoadView(import('../pages/Login/Login'))
 const NotFound = () => lazyLoadView(import('../pages/NotFound/NotFound'))
 
 export default [
@@ -27,6 +28,10 @@ export default [
   {
     path: '/profile',
     component: Profile
+  },
+  {
+    path: '/login',
+    component: Login
   },
   {
     path: '/', // 项目根路径

@@ -1,7 +1,7 @@
 <template>
   <section class="profile">
     <Header title="我 的" />
-    <section class="profile-user">
+    <section class="profile-user" @click="$router.push('/login')">
       <a class="user-link clearfix">
         <div class="user-avatar">
           <i class="iconfont icon-person"></i>
