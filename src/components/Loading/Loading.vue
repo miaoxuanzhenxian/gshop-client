@@ -13,6 +13,7 @@
 <style lang="stylus" rel="stylesheet/stylus" scoped>
   .loading
     position absolute
+    z-index 700
     top 50%
     left 50%
     transform translate(-50%, -50%)

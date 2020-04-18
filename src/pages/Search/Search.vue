@@ -18,7 +18,7 @@
   .search
     width 100%
     margin-bottom 50px
-   .search-form
+    .search-form
       margin-top 45px
       background #fff
       padding 12px 8px

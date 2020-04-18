@@ -1,24 +1,24 @@
 <template>
   <footer class="footer-guide border-1px">
-    <router-link to="/msite" exact tag="span" class="guide-item" active-class="on">
+    <router-link to="/msite" exact class="guide-item" active-class="on">
       <span>
         <i class="iconfont icon-waimai"></i>
       </span>
       <span>外卖</span>
     </router-link>
-    <router-link to="/search" exact tag="span" class="guide-item" active-class="on">
+    <router-link to="/search" exact class="guide-item" active-class="on">
       <span>
         <i class="iconfont icon-search"></i>
       </span>
       <span>搜索</span>
     </router-link>
-    <router-link to="/order" exact tag="span" class="guide-item" active-class="on">
+    <router-link to="/order" exact class="guide-item" active-class="on">
       <span>
         <i class="iconfont icon-dingdan"></i>
       </span>
       <span>订单</span>
     </router-link>
-    <router-link to="/profile" exact tag="span" class="guide-item" active-class="on">
+    <router-link to="/profile" exact class="guide-item" active-class="on">
       <span>
         <i class="iconfont icon-geren"></i>
       </span>
