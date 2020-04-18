@@ -149,10 +149,10 @@
               font-size 14px
         .arrow
           position absolute
-          width 12px
-          height 12px
           right 15px
           top 40%
+          width 12px
+          height 12px
           .icon-right-arrow
             font-size 12px
     .profile-property
@@ -238,13 +238,13 @@
               color #333
               &::after
                 content ''
+                position absolute
+                right 15px
+                top 50%
                 width 8px
                 height 8px
                 color #bbb
                 border-top 1px solid currentColor
                 border-left 1px solid currentColor
-                position absolute
-                top 50%
-                right 15px
                 transform translate3d(0, -50%, 0) rotate(135deg)
 </style>

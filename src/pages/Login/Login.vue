@@ -41,7 +41,11 @@
           </div>
           <button class="login-submit">登录</button>
         </form>
+        <a class="about-us">关于我们</a>
       </div>
+      <a class="goback">
+        <i class="iconfont icon-left-arrow"></i>
+      </a>
     </div>
   </section>
 </template>
@@ -54,6 +58,9 @@
 
 <style lang="stylus" rel="stylesheet/stylus" scoped>
   .login
+    position absolute
+    top 0
+    bottom 0
     width 100%
     background #fff
     .login-inner
@@ -155,5 +162,43 @@
               line-height 20px
               >a
                 color #02a774
-          // .login-submit
+          .login-submit
+            display block
+            margin-top 30px
+            width 100%
+            height 42px
+            line-height 42px
+            text-align center
+            border 0
+            border-radius 4px
+            background #4cd96f
+            font-size 16px
+            color #fff
+        .about-us
+          display block
+          margin-top 20px
+          text-align center
+          font-size 12px
+          color #999
+      .goback
+        position absolute
+        top 5px
+        left 5px
+        width 30px
+        height 30px
+        .icon-left-arrow
+          font-size 20px
+          color #999  
+      /* 自己通过伪元素来画左箭头
+      .goback::after
+        content ''
+        position absolute
+        top 5px
+        left 8px
+        width 11px
+        height 11px
+        color #009
+        border-top 1px solid currentColor
+        border-left 1px solid currentColor
+        transform rotate(-45deg) */
 </style>
