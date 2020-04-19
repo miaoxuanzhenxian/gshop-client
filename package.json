@@ -4,10 +4,16 @@
   "private": true,
   "scripts": {
     "serve": "vue-cli-service serve",
+    "pro": "vue-cli-service serve --mode production",
+    "test": "vue-cli-service serve --mode test",
+    "staging": "vue-cli-service serve --mode staging",
+    "mytest": "vue-cli-service serve --mode mytest",
     "build": "vue-cli-service build",
+    "build-staging": "vue-cli-service build --mode staging",
     "lint": "vue-cli-service lint"
   },
   "dependencies": {
+    "axios": "^0.19.2",
     "core-js": "^3.6.4",
     "fastclick": "^1.0.6",
     "mint-ui": "^2.2.13",
