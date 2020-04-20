@@ -39,7 +39,7 @@
               <img class="get-verification img-captcha" src="./images/captcha.svg" alt="captcha">
             </section>
           </div>
-          <button class="login-submit">登录</button>
+          <button class="login-submit">登录/注册</button>
         </form>
         <a class="about-us">关于我们</a>
       </div>

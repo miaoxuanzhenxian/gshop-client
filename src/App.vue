@@ -13,7 +13,6 @@
       FooterGuide
     }
   }
-  // console.log(process.env)
 </script>
 
 <style lang="stylus" rel="stylesheet/stylus" scoped>
