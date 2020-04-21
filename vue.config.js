@@ -1,6 +1,6 @@
 const packjson = require('./package.json')
 process.env.VUE_APP_VERSION = packjson.version
-process.env.VUE_APP_SYSTEMNAME = packjson.name
+process.env.VUE_APP_PROJECTNAME = packjson.name
 
 module.exports = {
   productionSourceMap: false, // 生产环境打包上线时(前)关闭sourcemap(开发中的源文件)
