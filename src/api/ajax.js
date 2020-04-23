@@ -46,5 +46,4 @@ instance.interceptors.response.use(response => {
   return new Promise(() => { }) 
 })
 
-
 export default instance
