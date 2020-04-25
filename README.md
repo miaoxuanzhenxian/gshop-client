@@ -76,7 +76,7 @@
         axios.interceptors.request.use(onResolved, onRejected)
         axios.interceptors.response.use(onResolved, onRejected)
 
-### 3). 封装axios
+### 3). 封装axios：发ajax请求的函数
     a. 利用请求拦截器, 对所有post请求的请求参数转换为urlencode格式字符串: name=xxx&pwd=yyy
     b. 利用响应拦截器, 让请求成功接收到的数据不是response, 而是response.data
     c. 利用响应拦截器, 对请求异常进行统一的处理, 具体的请求不需要单独再做请求异常处理
