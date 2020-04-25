@@ -3,10 +3,11 @@ import FastClick from 'fastclick' // 解决移动端浏览器上点击(click)响
 
 import App from './App'
 import router from './router'
+import store from './vuex/store'
 import Header from './components/Header/Header'
 import './assets/styles/reset.css'
 
-Vue.config.productionTip = false
+Vue.config.productionTip = false // 设置为false以阻止vue在启动时生成生产提示。
 
 
 // 注册全局组件
@@ -31,5 +32,6 @@ FastClick.attach(document.body)
 
 new Vue({
   render: h => h(App), // 函数返回组件的实例化标签<App />
-  router // 配置路由器
+  router, // 配置路由器
+  store // 配置vuex的store
 }).$mount('#app')
