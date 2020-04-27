@@ -143,7 +143,7 @@
                 },
                 is_new: true,
                 is_premium: true,
-                image_path: "/img/shop/15c1513a00615.jpg",
+                image_path: "/img/shop/15c1513a00615.jpg", (注：前面还有一个基础路径https://fuss10.elemecdn.com)
                 identification: {
                   registered_number: "",
                   registered_address: "",

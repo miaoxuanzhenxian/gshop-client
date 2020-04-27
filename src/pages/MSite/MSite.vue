@@ -126,6 +126,7 @@
 <script>
   import { mapState } from 'vuex'
   import Shops from './Shops/Shops'
+  
   export default {
     name: 'MSite',
 
@@ -135,6 +136,10 @@
 
     computed: {
       ...mapState(['address'])
+    },
+
+    mounted() {
+      this.$store.dispatch('getShops')
     }
   }
 </script>

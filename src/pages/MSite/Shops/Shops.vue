@@ -8,19 +8,17 @@
       <span class="shop-header-title">附近商家</span>
     </div>
     <div class="shop-container">
-      <ul class="shop-list">
-        <li class="shop-li border-1px">
+      <ul class="shop-list" v-if="shops.length > 0">
+        <li class="shop-li border-1px" v-for="shop in shops" :key="shop.id">
           <a class="shop-li-a clearfix">
             <div class="shop-left">
-              <img class="shop-img" src="./images/shop/1.jpg" alt="">
+              <img class="shop-img" :src="baseImgUrl + shop.image_path" :alt="shop.name">
             </div>
             <div class="shop-right">
               <section class="shop-info-header clearfix">
-                <h4 class="shop-title ellipsis">锄禾日当初，汗滴禾下土</h4>
+                <h4 class="shop-title ellipsis">{{shop.name}}</h4>
                 <ul class="info-header-ul">
-                  <li class="supports">保</li>
-                  <li class="supports">准</li>
-                  <li class="supports">票</li>
+                  <li class="supports" v-for="support in shop.supports" :key="support.id">{{support.icon_name}}</li>
                 </ul>
               </section>
               <section class="shop-info-brief clearfix">
@@ -32,175 +30,63 @@
                     <span class="star-item half"></span>
                     <span class="star-item off"></span>
                   </div>
-                  <div class="rating-section">3.6</div>
-                  <div class="sales-section">月售106单</div>
+                  <div class="rating-section">{{shop.rating}}</div>
+                  <div class="sales-section">月售{{shop.recent_order_num}}单</div>
                 </section>
                 <section class="info-brief-right">
-                  <span>30分钟</span>
-                  <span class="shop-distance">443m</span>
+                  <span>{{shop.order_lead_time}}</span>
+                  <span class="shop-distance">{{shop.distance}}</span>
                 </section>
               </section>
               <section class="shop-delivery clearfix">
                 <section class="delivery-left">
                   <div class="delivery-msg">
-                    <span>¥20起送</span>
+                    <span>¥{{shop.float_minimum_order_amount}}起送</span>
                     <span class="segmentation">/</span>
-                    <span>配送费约¥5</span>
+                    <span>配送费约¥{{shop.float_delivery_fee}}</span>
                   </div>
                 </section>
                 <section class="delivery-right">
-                  <span class="delivery-style">硅谷专送</span>
+                  <span class="delivery-style">{{shop.delivery_mode.text}}</span>
                 </section>
               </section>
             </div>
           </a>
         </li>
-        <li class="shop-li border-1px">
-          <a class="shop-li-a clearfix">
-            <div class="shop-left">
-              <img class="shop-img" src="./images/shop/2.jpg" alt="">
-            </div>
-            <div class="shop-right">
-              <section class="shop-info-header clearfix">
-                <h4 class="shop-title ellipsis">锄禾日当初，汗滴禾下土</h4>
-                <ul class="info-header-ul">
-                  <li class="supports">保</li>
-                  <li class="supports">准</li>
-                  <li class="supports">票</li>
-                </ul>
-              </section>
-              <section class="shop-info-brief clearfix">
-                <section class="info-brief-left">
-                  <div class="star star-24">
-                    <span class="star-item on"></span>
-                    <span class="star-item on"></span>
-                    <span class="star-item on"></span>
-                    <span class="star-item on"></span>
-                    <span class="star-item off"></span>
-                  </div>
-                  <div class="rating-section">4.1</div>
-                  <div class="sales-section">月售106单</div>
-                </section>
-                <section class="info-brief-right">
-                  <span>30分钟</span>
-                  <span class="shop-distance">443m</span>
-                </section>
-              </section>
-              <section class="shop-delivery clearfix">
-                <section class="delivery-left">
-                  <div class="delivery-msg">
-                    <span>¥20起送</span>
-                    <span class="segmentation">/</span>
-                    <span>配送费约¥5</span>
-                  </div>
-                </section>
-                <section class="delivery-right">
-                  <span class="delivery-style">硅谷专送</span>
-                </section>
-              </section>
-            </div>
-          </a>
+      </ul>
+      <ul v-else>
+        <li>
+          <img src="./images/shop_back.svg" alt="loading">
         </li>
-        <li class="shop-li border-1px">
-          <a class="shop-li-a clearfix">
-            <div class="shop-left">
-              <img class="shop-img" src="./images/shop/3.jpg" alt="">
-            </div>
-            <div class="shop-right">
-              <section class="shop-info-header clearfix">
-                <h4 class="shop-title ellipsis">锄禾日当初，汗滴禾下土</h4>
-                <ul class="info-header-ul">
-                  <li class="supports">保</li>
-                  <li class="supports">准</li>
-                  <li class="supports">票</li>
-                </ul>
-              </section>
-              <section class="shop-info-brief clearfix">
-                <section class="info-brief-left">
-                  <div class="star star-24">
-                    <span class="star-item on"></span>
-                    <span class="star-item on"></span>
-                    <span class="star-item on"></span>
-                    <span class="star-item off"></span>
-                    <span class="star-item off"></span>
-                  </div>
-                  <div class="rating-section">3.2</div>
-                  <div class="sales-section">月售106单</div>
-                </section>
-                <section class="info-brief-right">
-                  <span>30分钟</span>
-                  <span class="shop-distance">443m</span>
-                </section>
-              </section>
-              <section class="shop-delivery clearfix">
-                <section class="delivery-left">
-                  <div class="delivery-msg">
-                    <span>¥20起送</span>
-                    <span class="segmentation">/</span>
-                    <span>配送费约¥5</span>
-                  </div>
-                </section>
-                <section class="delivery-right">
-                  <span class="delivery-style">硅谷专送</span>
-                </section>
-              </section>
-            </div>
-          </a>
+        <li>
+          <img src="./images/shop_back.svg" alt="loading">
         </li>
-        <li class="shop-li border-1px">
-          <a class="shop-li-a clearfix">
-            <div class="shop-left">
-              <img class="shop-img" src="./images/shop/4.jpg" alt="">
-            </div>
-            <div class="shop-right">
-              <section class="shop-info-header clearfix">
-                <h4 class="shop-title ellipsis">锄禾日当初，汗滴禾下土</h4>
-                <ul class="info-header-ul">
-                  <li class="supports">保</li>
-                  <li class="supports">准</li>
-                  <li class="supports">票</li>
-                </ul>
-              </section>
-              <section class="shop-info-brief clearfix">
-                <section class="info-brief-left">
-                  <div class="star star-24">
-                    <span class="star-item on"></span>
-                    <span class="star-item on"></span>
-                    <span class="star-item on"></span>
-                    <span class="star-item half"></span>
-                    <span class="star-item off"></span>
-                  </div>
-                  <div class="rating-section">3.6</div>
-                  <div class="sales-section">月售106单</div>
-                </section>
-                <section class="info-brief-right">
-                  <span>30分钟</span>
-                  <span class="shop-distance">443m</span>
-                </section>
-              </section>
-              <section class="shop-delivery clearfix">
-                <section class="delivery-left">
-                  <div class="delivery-msg">
-                    <span>¥20起送</span>
-                    <span class="segmentation">/</span>
-                    <span>配送费约¥5</span>
-                  </div>
-                </section>
-                <section class="delivery-right">
-                  <span class="delivery-style">硅谷专送</span>
-                </section>
-              </section>
-            </div>
-          </a>
+        <li>
+          <img src="./images/shop_back.svg" alt="loading">
         </li>
-      </ul>  
+        <li>
+          <img src="./images/shop_back.svg" alt="loading">
+        </li>
+      </ul>
     </div>
   </div>
 </template>
 
 <script>
+  import { mapState } from 'vuex'
+
   export default {
-    name: 'Shops'
+    name: 'Shops',
+
+    data() {
+      return {
+        baseImgUrl: process.env.VUE_APP_BASE_IMGURL
+      }
+    },
+
+    computed: {
+      ...mapState(['shops'])
+    }
   }
 </script>
 
@@ -339,6 +225,8 @@
                     font-size 12px
                     color #666
                     margin-left 10px
+                    // font-size 12px // 手机浏览器的字体大小最小只能为12px,若小于12px，则显示出来的效果还是12px，若想显示出来的效果能达到10px，则需用transform: scale(.8)来强行缩小0.8倍的12px的字体，使其显示出来的效果达到9.6px(即10px)的字体大小
+                    // transform scale(.8)
                 .info-brief-right
                   float right
                   font-size 12px
