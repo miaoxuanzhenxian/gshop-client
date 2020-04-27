@@ -261,5 +261,4 @@
                     display inline-block
                     transform scale(.8) // 注意:当transform: scale()压缩时,被压缩的元素若是inline类型(display为inline)的行内元素，则压缩不起作用(相当于transform: scale();无效); 但若被压缩的元素是inline-block类型或block类型或浮动的元素，则可以压缩，压缩会起作用; 因此若想使用transform: scale()缩放元素，则该元素不能是inline类型的行内元素，必须是(或者说用display或float转为)inline-block类型的行内块元素或block类型的块元素类型或添加了浮动float的元素才行
                     transform-origin right top
-
 </style>
