@@ -73,7 +73,7 @@
                 is_in_serving: true,
                 description: "",
                 title: "土豪推荐",
-                image_url: "/d/49/7757ff22e8ab28e7dfa5f7e2c2692jpeg.jpeg",
+                image_url: "/d/49/7757ff22e8ab28e7dfa5f7e2c2692jpeg.jpeg", (注：前面还有一个基础路径https://fuss10.elemecdn.com)
                 link: "",
                 icon_url: "",
                 title_color: "",
