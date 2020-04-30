@@ -83,12 +83,64 @@
       }
     },
 
-    mounted() {
-      this.$store.dispatch('getShops')
-      this.$store.dispatch('getCategorys') // 其中内部要发请求，是异步操作，需要一定的时间
+    /*
+      方式1: watch + nextTick() 解决创建swiper对象之后不能正常轮播的问题
+    */
+    // watch: {
+    //   // vue的处理过程  更新状态数据 ==> 调用对应的watch监视的回调函数 ==> 异步更新界面
+    //   categorys() { // 一旦这个方法调用了，则说明categorys发生了改变/ 数组数据来了
+    //     // 将回调延迟到下次 DOM 更新循环之后执行。在修改数据之后立即使用它，然后等待 DOM 更新
+    //     this.$nextTick(() => {
+    //       /*
+    //         创建Swiper对象的时机？ 必须在列表页面显示之后，才能正常工作、正常轮播
+    //       */
+    //       new Swiper('.swiper-container', {
+    //         loop: true, // 循环模式
+    //         // 如果需要分页器
+    //         pagination: {
+    //           el: '.swiper-pagination'
+    //         }
+    //       })
+    //     })
+    //   }
+    // },
 
+    async mounted() {
+      // 分发action, 异步获取商家列表
+      this.$store.dispatch('getShops')
+      // /*
+      //   分发action, 异步获取分类列表,其中内部要发请求，是异步操作，需要一定的时间
+      //   方式2: callback + nextTick() 解决创建swiper对象之后不能正常轮播的问题
+      // */
+      // this.$store.dispatch('getCategorys', () => { // categorys数据变化了
+      //   // 将回调延迟到下次 DOM 更新循环之后执行。在修改数据之后立即使用它，然后等待 DOM 更新
+      //   this.$nextTick(() => {
+      //     /*
+      //       创建Swiper对象的时机？ 必须在列表页面显示之后，才能正常工作、正常轮播
+      //     */
+      //     new Swiper('.swiper-container', {
+      //       loop: true, // 循环模式
+      //       // 如果需要分页器
+      //       pagination: {
+      //         el: '.swiper-pagination'
+      //       }
+      //     })
+      //   })
+      // })
       /*
-        创建Swiper对象的时机？ 必须在列表页面(列表数据)显示之后，才能正常工作、正常轮播
+        解决创建swiper对象之后不能正常轮播的问题
+        原因: 创建对象的时机太早(必须在列表页面显示之后)
+        解决: 
+          1. watch + nextTick()
+          2. callback + nextTick()
+          3. 利用dispatch()返回的promise在状态更新且界面更新之后才成功的特点
+
+        分发action, 异步获取分类列表,其中内部要发请求，是异步操作，需要一定的时间
+        方式3: 利用dispatch()返回的promise 解决创建swiper对象之后不能正常轮播的问题
+      */
+      await this.$store.dispatch('getCategorys') // 返回的Promise在状态更新且界面更新之后才成功
+      /*
+        创建Swiper对象的时机？ 必须在列表页面显示之后，才能正常工作、正常轮播
       */
       new Swiper('.swiper-container', {
         loop: true, // 循环模式

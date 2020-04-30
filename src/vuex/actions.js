@@ -28,8 +28,26 @@ export default {
     }
   },
   
+  // /*
+  //   获取食品分类列表的异步action
+  //   方式2: callback + nextTick() 解决创建swiper对象之后不能正常轮播的问题
+  // */
+  // async getCategorys({ commit }, callback) {
+  //   // 1. 调用接口请求函数发请求
+  //   const result = await reqCategorys()
+  //   // 2.有了结果后，提交mutation
+  //   if (result.code === 0) {
+  //     const categorys = result.data
+  //     commit(RECEIVE_CATEGORYS, categorys) // 内部同步调用mutation更新状态数据
+
+  //     // 在commit之后执行callback, 即在更新状态数据后执行callback回调函数
+  //     typeof callback === 'function' && callback()
+  //   }
+  // },
+
   /*
     获取食品分类列表的异步action
+    方式2: callback + nextTick() 解决创建swiper对象之后不能正常轮播的问题
   */
   async getCategorys({ commit }) {
     // 1. 调用接口请求函数发请求
