@@ -21,9 +21,14 @@ module.exports = {
       filterRule: rule => rule.selector.indexOf('::after') === -1 && rule.selector.indexOf('::before') === -1 && rule.selector.indexOf(':after') === -1 && rule.selector.indexOf(':before') === -1 // 过滤掉伪元素选择器::before、::after
     },
     "cssnano": {
-      preset: "advanced",
-      autoprefixer: false,    // 和cssnext同样具有autoprefixer，保留一个
-      "postcss-zindex": false // 只要启用了这个插件，z-index的值就会重置为1。这是一个天坑，千万记得将postcss-zindex设置为false。
+      /* 以下其中注释部分为旧版本的写法 */
+      // preset: "advanced",
+      // autoprefixer: false,    // 和cssnext同样具有autoprefixer，保留一个
+      // "postcss-zindex": false // 只要启用了这个插件，z-index的值就会重置为1。这是一个天坑，千万记得将postcss-zindex设置为false。
+      "cssnano-preset-advanced": {
+        autoprefixer: false,    // 和cssnext同样具有autoprefixer，保留一个
+        zindex: false // 只要启用了这个插件，z-index的值就会重置为1。这是一个天坑，千万记得将postcss-zindex设置为false。
+      }
     }
   }
 }
