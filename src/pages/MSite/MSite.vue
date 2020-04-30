@@ -133,7 +133,7 @@
       /*
         解决创建swiper对象之后不能正常轮播的问题
         原因: 创建对象的时机太早(必须在列表页面显示之后)
-        解决: 
+        解决方式: 
           1. watch + nextTick()
           2. callback + nextTick()
           3. 利用dispatch()返回的promise在状态更新且界面更新之后才成功的特点
