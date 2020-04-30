@@ -11,7 +11,7 @@
     </Header>
     <!-- 首页导航 -->
     <nav class="msite-nav border-1px">
-      <div class="swiper-container">
+      <div class="swiper-container" v-if="categorys.length > 0">
         <div class="swiper-wrapper">
           <div class="swiper-slide" v-for="(categories, index) in categoriesArr" :key="index">
             <a href="javascript:" class="link-to-food" v-for="c in categories" :key="c.id">
@@ -24,6 +24,9 @@
         </div>
         <!-- 添加分页器 -->
         <div class="swiper-pagination"></div>
+      </div>
+      <div v-else>
+        <img src="./images/msite_back.svg" alt="">
       </div>
     </nav>
     <!-- 首页附近商家 -->
