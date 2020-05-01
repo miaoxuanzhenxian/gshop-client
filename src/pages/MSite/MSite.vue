@@ -92,6 +92,7 @@
         一个小数组只能被添加到大数组中一次
 
         使用lodash库的chunk模块方法实现
+        lodash库的chunk模块方法chunk(array, [size=1])：将数组（array）拆分成多个 size 长度的区块(一维数组)，并将这些区块(一维数组)放到一个新数组中，形成一个二维数组并返回。如果array 无法被分割成全部等长的区块，那么最后剩余的元素将组成一个区块
       */
       categoriesArr() {
         return chunk(this.categorys, 8)
