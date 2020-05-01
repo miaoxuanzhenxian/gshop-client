@@ -4,13 +4,13 @@
       <div class="login-header">
         <h2 class="login-logo-name">硅谷外卖</h2>
         <div class="login-header-title">
-          <a class="on">短信登录</a>
-          <a>密码登录</a>
+          <a :class="{on: loginType}" @click="loginType = true">短信登录</a>
+          <a :class="{on: !loginType}" @click="loginType = false">密码登录</a>
         </div>
       </div>
       <div class="login-content">
         <form>
-          <div class="on">
+          <div :class="{on: loginType}">
             <section class="login-message">
               <input type="tel" maxlength="11" placeholder="手机号">
               <button disabled="disabled" class="get-verification btn">获取验证码</button>
@@ -23,7 +23,7 @@
               <a>《用户服务协议》</a>
             </section>
           </div>
-          <div>
+          <div :class="{on: !loginType}">
             <section class="login-message">
               <input type="text" maxlength="150" placeholder="手机/邮箱/用户名">
             </section>
@@ -52,7 +52,13 @@
 
 <script>
   export default {
-    name: 'Login'
+    name: 'Login',
+
+    data() {
+      return {
+        loginType: true, // true: 短信登录，false: 密码登录
+      }
+    }
   }
 </script>
 
