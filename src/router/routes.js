@@ -2,6 +2,7 @@
   配置应用中所有路由
 */
 import lazyLoadView from '../utils/lazyLoadView'
+import NotFound from '../pages/NotFound/NotFound'
 
 
 // 路由的懒加载，解决首屏加载过慢的问题
@@ -10,7 +11,6 @@ const Search = () => lazyLoadView(import('../pages/Search/Search'))
 const Order = () => lazyLoadView(import('../pages/Order/Order'))
 const Profile = () => lazyLoadView(import('../pages/Profile/Profile'))
 const Login = () => lazyLoadView(import('../pages/Login/Login'))
-const NotFound = () => lazyLoadView(import('../pages/NotFound/NotFound'))
 
 export default [
   {

@@ -36,6 +36,7 @@
 
 <script>
   import { mapState } from 'vuex'
+  import { chunk } from 'lodash'
   import Swiper from 'swiper'
   import 'swiper/css/swiper.css'
   import Shops from './Shops/Shops'
@@ -57,11 +58,11 @@
       ...mapState(['address', 'categorys']),
 
       /*
-        分类的二维数组
-        一个小数组的最大长度为8
+        根据分类的一维数组生成二维数组
+        生成的二维数组内部的每一个小数组(一维数组)的最大长度为8
         一个小数组只能被添加到大数组中一次
       */
-      categoriesArr() {
+      /* categoriesArr1() {
         const bigArr = []
         let smallArr = []
         const { categorys } = this
@@ -83,7 +84,18 @@
         })
 
         return bigArr
-      }
+      } */
+
+      /*
+        根据分类的一维数组生成二维数组
+        生成的二维数组内部的每一个小数组(一维数组)的最大长度为8
+        一个小数组只能被添加到大数组中一次
+
+        使用lodash库的chunk模块方法实现
+      */
+      categoriesArr() {
+        return chunk(this.categorys, 8)
+      }  
     },
 
     /*
