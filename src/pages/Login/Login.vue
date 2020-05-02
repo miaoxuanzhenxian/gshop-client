@@ -14,12 +14,12 @@
             <section class="login-message">
               <input type="tel" maxlength="11" placeholder="手机号" v-model="phone">
               <button
-                :disabled="!isRightPhone" 
+                :disabled="!isRightPhone || computeTime > 0" 
                 class="get-verification btn" 
                 :class="{'right-phone-number': isRightPhone}"
                 @click.prevent="getCode"
               >
-                获取验证码
+                {{computeTime > 0 ? `短信已发送(${computeTime}s)` : '获取验证码'}}
               </button>
             </section>
             <section class="login-message">
@@ -50,7 +50,7 @@
         </form>
         <a class="about-us">关于我们</a>
       </div>
-      <a class="goback">
+      <a class="goback" @click="$router.back()">
         <i class="iconfont icon-left-arrow"></i>
       </a>
     </div>
@@ -64,7 +64,8 @@
     data() {
       return {
         loginType: true, // true: 短信登录，false: 密码登录
-        phone: '' // 手机号
+        phone: '', // 手机号
+        computeTime: 0 // 计时剩余的时间，为0时没有计时了
       }
     },
 
@@ -76,7 +77,20 @@
 
     methods: {
       getCode() {
-        console.log('code')
+        // 将computeTime设置为计时的最大值
+        this.computeTime = 59
+        // 启动循环定时器，每隔1s将computeTime减1
+        const intervalId = setInterval(() => {
+          this.computeTime--
+          if (this.computeTime <= 0) {
+            this.computeTime = 0
+            clearInterval(intervalId)
+          }
+        }, 1000)
+
+        this.$once('hook:beforeDestroy', () => { // 通过一个程序化的侦听器$once监听beforeDestroy生命周期钩子(此时在this.$once的回调函数内执行语句就相当于beforeDestroy生命周期钩子函数内执行语句)，在组件被销毁之前，清除定时器。 注：this.$once作用是监听一个自定义事件，但是只触发一次。一旦触发之后，监听器就会被移除。
+          clearInterval(intervalId)
+        })
       }
     }
   }
