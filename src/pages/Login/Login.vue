@@ -12,8 +12,15 @@
         <form>
           <div :class="{on: loginType}">
             <section class="login-message">
-              <input type="tel" maxlength="11" placeholder="手机号">
-              <button disabled="disabled" class="get-verification btn">获取验证码</button>
+              <input type="tel" maxlength="11" placeholder="手机号" v-model="phone">
+              <button
+                :disabled="!isRightPhone" 
+                class="get-verification btn" 
+                :class="{'right-phone-number': isRightPhone}"
+                @click.prevent="getCode"
+              >
+                获取验证码
+              </button>
             </section>
             <section class="login-message">
               <input type="tel" maxlength="8" placeholder="短信验证码">
@@ -57,6 +64,19 @@
     data() {
       return {
         loginType: true, // true: 短信登录，false: 密码登录
+        phone: ''
+      }
+    },
+
+    computed: {
+      isRightPhone() {
+        return /^1[3-9]\d{9}$/.test(this.phone)
+      }
+    },
+
+    methods: {
+      getCode() {
+        console.log('code')
       }
     }
   }
@@ -124,6 +144,8 @@
                 font-size 14px
                 color #ccc
                 background transparent
+                &.right-phone-number
+                  color black
                 &.btn
                   outline none
                 &.img-captcha
