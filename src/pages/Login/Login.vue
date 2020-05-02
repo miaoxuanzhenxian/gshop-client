@@ -64,7 +64,7 @@
     data() {
       return {
         loginType: true, // true: 短信登录，false: 密码登录
-        phone: ''
+        phone: '' // 手机号
       }
     },
 
