@@ -35,10 +35,10 @@
               <input type="text" maxlength="150" placeholder="手机/邮箱/用户名">
             </section>
             <section class="login-message">
-              <input type="password" maxlength="32" placeholder="密码">
-              <div class="switch-button off">
-                <div class="switch-circle"></div>
-                <span class="switch-text"></span>
+              <input :type="isShowPwd ? 'text' : 'password'" maxlength="32" placeholder="密码">
+              <div class="switch-button" :class="isShowPwd ? 'on' : 'off'" @click="isShowPwd = !isShowPwd">
+                <div class="switch-circle" :class="{right: isShowPwd}"></div>
+                <span class="switch-text">{{isShowPwd ? 'abc' : ''}}</span>
               </div>
             </section>
             <section class="login-message">
@@ -65,7 +65,8 @@
       return {
         loginType: true, // true: 短信登录，false: 密码登录
         phone: '', // 手机号
-        computeTime: 0 // 计时剩余的时间，为0时没有计时了
+        computeTime: 0, // 计时剩余的时间，为0时没有计时了
+        isShowPwd: false // 是否显示密码，默认不显示
       }
     },
 
@@ -197,6 +198,8 @@
                   left -1px
                   box-shadow 0 2px 4px 0 rgba(0, 0, 0, .1)
                   transition transform .3s
+                  &.right
+                    transform translateX(27px)
             .login-hint
               margin-top 12px
               color #999
