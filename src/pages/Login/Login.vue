@@ -11,7 +11,7 @@
       <div class="login-content">
         <form>
           <div :class="{on: loginType}">
-            <ValidationObserver ref="phoneLogin">
+            <ValidationObserver ref="smsLogin">
               <ValidationProvider name="phone" rules="required|phone" v-slot="{ errors, valid }">
                 <section class="login-message first-login-message">
                   <input type="tel" maxlength="11" placeholder="手机号" v-model="phone">
@@ -19,16 +19,16 @@
                     :disabled="!isRightPhone || computeTime > 0" 
                     class="get-verification btn" 
                     :class="{'right-phone-number': isRightPhone}"
-                    @click.prevent="getCode"
+                    @click.prevent="getSmsCode"
                   >
                     {{computeTime > 0 ? `短信已发送(${computeTime}s)` : '获取验证码'}}
                   </button>
                   <p class="validate-error-msg" v-show="!valid">{{ errors[0] }}</p>
                 </section>
               </ValidationProvider>
-              <ValidationProvider name="code" :rules="{required: true, regex: /^\d{6}$/}" #default="{ errors, valid }">
+              <ValidationProvider name="smsCode" :rules="{required: true, regex: /^\d{6}$/}" #default="{ errors, valid }">
                 <section class="login-message">
-                  <input type="tel" maxlength="8" placeholder="短信验证码" v-model="code">
+                  <input type="tel" maxlength="8" placeholder="短信验证码" v-model="smsCode">
                   <p class="validate-error-msg" v-show="!valid">{{ errors[0] }}</p>
                 </section>
               </ValidationProvider>
@@ -39,20 +39,31 @@
             </section>
           </div>
           <div :class="{on: !loginType}">
-            <section class="login-message first-login-message">
-              <input type="text" maxlength="150" placeholder="手机/邮箱/用户名">
-            </section>
-            <section class="login-message">
-              <input :type="isShowPwd ? 'text' : 'password'" maxlength="32" placeholder="密码">
-              <div class="switch-button" :class="isShowPwd ? 'on' : 'off'" @click="isShowPwd = !isShowPwd">
-                <div class="switch-circle" :class="{right: isShowPwd}"></div>
-                <span class="switch-text">{{isShowPwd ? 'abc' : ''}}</span>
-              </div>
-            </section>
-            <section class="login-message">
-              <input type="text" maxlength="8" placeholder="验证码">
-              <img class="get-verification img-captcha" src="./images/captcha.svg" alt="captcha">
-            </section>
+            <ValidationObserver ref="pwdLogin">
+              <ValidationProvider name="name" rules="required|min:6" v-slot="{ errors }">
+                <section class="login-message first-login-message">
+                  <input type="text" maxlength="150" placeholder="手机/邮箱/用户名" v-model="name">
+                  <p class="validate-error-msg">{{ errors[0] }}</p>
+                </section>
+              </ValidationProvider>
+              <ValidationProvider name="pwd" rules="required|min:6" v-slot="{ errors }">
+                <section class="login-message">
+                  <input :type="isShowPwd ? 'text' : 'password'" maxlength="32" placeholder="密码" v-model="pwd">
+                  <div class="switch-button" :class="isShowPwd ? 'on' : 'off'" @click="isShowPwd = !isShowPwd">
+                    <div class="switch-circle" :class="{right: isShowPwd}"></div>
+                    <span class="switch-text">{{isShowPwd ? 'abc' : ''}}</span>
+                  </div>
+                  <p class="validate-error-msg">{{ errors[0] }}</p>
+                </section>
+              </ValidationProvider>
+              <ValidationProvider name="captcha" :rules="{ required: true, regex: /^[0-9a-zA-Z]{4}$/ }" v-slot="{ errors }">
+                <section class="login-message">
+                  <input type="text" maxlength="8" placeholder="验证码" v-model="captcha">
+                  <img class="get-verification img-captcha" src="./images/captcha.svg" alt="captcha">
+                  <p class="validate-error-msg">{{ errors[0] }}</p>
+                </section>
+              </ValidationProvider>
+            </ValidationObserver>
           </div>
           <button class="login-submit" @click.prevent="login">登录/注册</button>
         </form>
@@ -73,7 +84,10 @@
       return {
         loginType: true, // true: 短信登录，false: 密码登录
         phone: '', // 手机号
-        code: '', // 短信验证码
+        smsCode: '', // 短信验证码
+        name: '', // 用户名
+        pwd: "", // 密码
+        captcha: '', // 图形验证码
         computeTime: 0, // 计时剩余的时间，为0时没有计时了
         isShowPwd: false // 是否显示密码，默认不显示
       }
@@ -86,7 +100,7 @@
     },
 
     methods: {
-      getCode() {
+      getSmsCode() {
         // 将computeTime设置为计时的最大值
         this.computeTime = 59
         // 启动循环定时器，每隔1s将computeTime减1
@@ -102,13 +116,16 @@
           clearInterval(intervalId)
         })
       },
-
+      
       async login() {
+        const { loginType } = this
+
+        const valObsRef = loginType ? 'smsLogin' : 'pwdLogin'
+
         // 进行前台表单验证
-        console.log(this.$refs.phoneLogin)
-        const success = await this.$refs.phoneLogin.validate()
+        const success = await this.$refs[valObsRef].validate() // 对指定的所有表单项进行验证,全部通过，则返回的成功的promise的结果为true;只要有一个验证没通过，则返回的成功的promise的结果为false
         if (success) {
-          console.log('test')
+          console.log('表单验证通过，发送登录请求')
         }
       }
     }
