@@ -11,27 +11,35 @@
       <div class="login-content">
         <form>
           <div :class="{on: loginType}">
-            <section class="login-message">
-              <input type="tel" maxlength="11" placeholder="手机号" v-model="phone">
-              <button
-                :disabled="!isRightPhone || computeTime > 0" 
-                class="get-verification btn" 
-                :class="{'right-phone-number': isRightPhone}"
-                @click.prevent="getCode"
-              >
-                {{computeTime > 0 ? `短信已发送(${computeTime}s)` : '获取验证码'}}
-              </button>
-            </section>
-            <section class="login-message">
-              <input type="tel" maxlength="8" placeholder="短信验证码">
-            </section>
+            <ValidationObserver ref="phoneLogin">
+              <ValidationProvider name="phone" rules="required|phone" v-slot="{ errors, valid }">
+                <section class="login-message first-login-message">
+                  <input type="tel" maxlength="11" placeholder="手机号" v-model="phone">
+                  <button
+                    :disabled="!isRightPhone || computeTime > 0" 
+                    class="get-verification btn" 
+                    :class="{'right-phone-number': isRightPhone}"
+                    @click.prevent="getCode"
+                  >
+                    {{computeTime > 0 ? `短信已发送(${computeTime}s)` : '获取验证码'}}
+                  </button>
+                  <p class="validate-error-msg" v-show="!valid">{{ errors[0] }}</p>
+                </section>
+              </ValidationProvider>
+              <ValidationProvider name="code" :rules="{required: true, regex: /^\d{6}$/}" #default="{ errors, valid }">
+                <section class="login-message">
+                  <input type="tel" maxlength="8" placeholder="短信验证码" v-model="code">
+                  <p class="validate-error-msg" v-show="!valid">{{ errors[0] }}</p>
+                </section>
+              </ValidationProvider>
+            </ValidationObserver>
             <section class="login-hint">
               温馨提示：未注册硅谷外卖帐号的手机号，登录时将自动注册，且代表已同意
               <a>《用户服务协议》</a>
             </section>
           </div>
           <div :class="{on: !loginType}">
-            <section class="login-message">
+            <section class="login-message first-login-message">
               <input type="text" maxlength="150" placeholder="手机/邮箱/用户名">
             </section>
             <section class="login-message">
@@ -46,7 +54,7 @@
               <img class="get-verification img-captcha" src="./images/captcha.svg" alt="captcha">
             </section>
           </div>
-          <button class="login-submit">登录/注册</button>
+          <button class="login-submit" @click.prevent="login">登录/注册</button>
         </form>
         <a class="about-us">关于我们</a>
       </div>
@@ -65,6 +73,7 @@
       return {
         loginType: true, // true: 短信登录，false: 密码登录
         phone: '', // 手机号
+        code: '', // 短信验证码
         computeTime: 0, // 计时剩余的时间，为0时没有计时了
         isShowPwd: false // 是否显示密码，默认不显示
       }
@@ -92,6 +101,15 @@
         this.$once('hook:beforeDestroy', () => { // 通过一个程序化的侦听器$once监听beforeDestroy生命周期钩子(此时在this.$once的回调函数内执行语句就相当于beforeDestroy生命周期钩子函数内执行语句)，在组件被销毁之前，清除定时器。 注：this.$once作用是监听一个自定义事件，但是只触发一次。一旦触发之后，监听器就会被移除。
           clearInterval(intervalId)
         })
+      },
+
+      async login() {
+        // 进行前台表单验证
+        console.log(this.$refs.phoneLogin)
+        const success = await this.$refs.phoneLogin.validate()
+        if (success) {
+          console.log('test')
+        }
       }
     }
   }
@@ -146,10 +164,13 @@
                 border 1px solid #02a774
             .login-message
               position relative
-              margin-top 16px
+              // margin-top 16px
+              margin-top 22px
               height 48px
               font-size 14px
               background #fff
+              &.first-login-message
+                margin-top 16px
               .get-verification
                 position absolute
                 right 10px
@@ -166,6 +187,9 @@
                 &.img-captcha
                   width 150px
                   height 48px
+              .validate-error-msg
+                color red
+                margin-top 4px
               .switch-button
                 font-size 12px
                 border 1px solid #ddd
@@ -201,7 +225,7 @@
                   &.right
                     transform translateX(27px)
             .login-hint
-              margin-top 12px
+              margin-top 22px
               color #999
               font-size 14px
               line-height 20px

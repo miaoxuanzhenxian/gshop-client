@@ -7,6 +7,7 @@ import store from './vuex/store'
 import Header from './components/Header/Header'
 import Star from './components/Star/Star'
 import './assets/styles/reset.css'
+import './assets/js/validate.js'
 
 Vue.config.productionTip = false // 设置为false以阻止vue在启动时生成生产提示。
 
