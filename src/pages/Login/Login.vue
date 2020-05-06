@@ -59,7 +59,7 @@
               <ValidationProvider name="captcha" :rules="{ required: true, regex: /^[0-9a-zA-Z]{4}$/ }" v-slot="{ errors }">
                 <section class="login-message">
                   <input type="text" maxlength="8" placeholder="验证码" v-model="captcha">
-                  <img class="get-verification img-captcha" src="./images/captcha.svg" alt="captcha">
+                  <img class="get-verification img-captcha" :src="baseUrl + '/captcha'" alt="captcha" ref="captchaImg" @click="updateCaptcha">
                   <p class="validate-error-msg">{{ errors[0] }}</p>
                 </section>
               </ValidationProvider>
@@ -82,7 +82,8 @@
 
     data() {
       return {
-        loginType: true, // true: 短信登录，false: 密码登录
+        baseUrl: process.env.VUE_APP_BASE_URL,
+        loginType: false, // true: 短信登录，false: 密码登录
         phone: '', // 手机号
         smsCode: '', // 短信验证码
         name: '', // 用户名
@@ -100,6 +101,9 @@
     },
 
     methods: {
+      /*
+        获取短信验证码
+      */
       getSmsCode() {
         // 将computeTime设置为计时的最大值
         this.computeTime = 59
@@ -116,7 +120,18 @@
           clearInterval(intervalId)
         })
       },
-      
+
+      /*
+        更新显示图形验证码
+      */
+      updateCaptcha() {
+        // 要给img指定一个新的src值, 指定的src值需要携带一个时间戳参数(query参数,?a=1&b=2格式), 这样才能保证每次点击时都去重新发请求(发src:http://localhost:4000/captcha请求),才能更新显示新的图形验证码。 时间戳就是就是当前时间值(通常指当前时间毫秒数)
+        this.$refs.captchaImg.src = this.baseUrl + '/captcha?time=' + Date.now()
+      },
+
+      /*
+        登录
+      */
       async login() {
         const { loginType } = this
 
