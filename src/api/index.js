@@ -32,10 +32,31 @@ export const reqShops = (longitude, latitude) => ajax('/shops', {
 /*
   4、发送短信验证码
 */
-export const reqSendCode = (phone) => ajax('/sendcode', {
+export const reqSendCode = phone => ajax('/sendcode', {
   params: {
     phone
   }
+})
+
+/*
+  5、用户名密码登陆
+*/
+export const reqPwdLogin = ({ 
+  name, 
+  pwd, 
+  captcha 
+}) => ajax.post('/login_pwd', {
+  name,
+  pwd,
+  captcha
+})
+
+/*
+  6、手机号短信验证码登陆
+*/
+export const reqSmsLogin = (phone, code) => ajax.post('/login_sms', {
+  phone,
+  code
 })
 
 // export const reqBaiDuXxx = () => ajax(BASE2 + '/xxx') // 练习使用代理解决ajax跨域问题，另一个后台服务器(http://www.baidu.com)

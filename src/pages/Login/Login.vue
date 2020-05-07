@@ -26,9 +26,9 @@
                   <p class="validate-error-msg" v-show="!valid">{{ errors[0] }}</p>
                 </section>
               </ValidationProvider>
-              <ValidationProvider name="smsCode" :rules="{required: true, regex: /^\d{6}$/}" #default="{ errors, valid }">
+              <ValidationProvider name="code" :rules="{required: true, regex: /^\d{6}$/}" #default="{ errors, valid }">
                 <section class="login-message">
-                  <input type="tel" maxlength="8" placeholder="短信验证码" v-model="smsCode">
+                  <input type="tel" maxlength="8" placeholder="短信验证码" v-model="code">
                   <p class="validate-error-msg" v-show="!valid">{{ errors[0] }}</p>
                 </section>
               </ValidationProvider>
@@ -40,7 +40,7 @@
           </div>
           <div :class="{on: !loginType}">
             <ValidationObserver ref="pwdLogin">
-              <ValidationProvider name="name" rules="required|min:6" v-slot="{ errors }">
+              <ValidationProvider name="name" rules="required" v-slot="{ errors }">
                 <section class="login-message first-login-message">
                   <input type="text" maxlength="150" placeholder="手机/邮箱/用户名" v-model="name">
                   <p class="validate-error-msg">{{ errors[0] }}</p>
@@ -78,7 +78,7 @@
 
 <script>
   import { Toast, MessageBox } from 'mint-ui'
-  import { reqSendCode } from '@/api'
+  import { reqSendCode, reqPwdLogin, reqSmsLogin } from '@/api'
 
   export default {
     name: 'Login',
@@ -88,7 +88,7 @@
         baseUrl: process.env.VUE_APP_BASE_URL,
         loginType: true, // true: 短信登录，false: 密码登录
         phone: '', // 手机号
-        smsCode: '', // 短信验证码
+        code: '', // 短信验证码
         name: '', // 用户名
         pwd: "", // 密码
         captcha: '', // 图形验证码
@@ -130,7 +130,7 @@
         if (result.code === 0) {
           Toast('短信验证码已发送')
         } else {
-          // 停止定时器
+          // 停止倒计时
           this.computeTime = 0
           MessageBox('提示', result.msg || '短信验证码发送失败')
         }
@@ -148,14 +148,30 @@
         登录
       */
       async login() {
-        const { loginType } = this
+        const { loginType, phone, code, name, pwd, captcha } = this
 
         const valObsRef = loginType ? 'smsLogin' : 'pwdLogin'
 
         // 进行前台表单验证
         const success = await this.$refs[valObsRef].validate() // 对指定的所有表单项进行验证,全部通过，则返回的成功的promise的结果为true;只要有一个验证没通过，则返回的成功的promise的结果为false
         if (success) {
-          console.log('表单验证通过，发送登录请求')
+          let result
+          if (loginType) { // 短信登录
+            result = await reqSmsLogin(phone, code)
+          } else { // 密码登录
+            result = await reqPwdLogin({ name, pwd, captcha })
+          }
+
+          // 根据请求的结果, 进行不同的响应处理
+          if (result.code === 0) {
+            // const user = result.data
+            // 将user信息保存到vuex的state中
+
+            // 跳转到个人中心
+            this.$router.replace('/profile')
+          } else {
+            MessageBox('提示', result.msg)
+          }
         }
       }
     }

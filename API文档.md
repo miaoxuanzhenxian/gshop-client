@@ -413,7 +413,8 @@
         "code": 0,
         "data": {
           "_id": "5a9cd9c6ad5b2d34d42b385d",
-          "name": "aaa"
+          "name": "aaa",
+          "token": "abcdxx"
         }
       }
     * 登陆失败
@@ -451,7 +452,7 @@
     }
       
       
-## 8、手机号验证码登陆
+## 8、手机号短信验证码登陆
      
 ### 请求URL：
 	http://localhost:4000/login_sms

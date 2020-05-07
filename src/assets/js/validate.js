@@ -21,7 +21,7 @@ localize('zh_CN', zh_CN)
 
 const names= {
   phone: '手机号',
-  smsCode: '短信验证码',
+  code: '短信验证码',
   name: '用户名',
   pwd: '密码',
   captcha: '验证码'
