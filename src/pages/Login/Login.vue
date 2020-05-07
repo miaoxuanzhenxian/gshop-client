@@ -160,6 +160,11 @@
             result = await reqSmsLogin(phone, code)
           } else { // 密码登录
             result = await reqPwdLogin({ name, pwd, captcha })
+            // 如果登录失败，更新一下图形验证码，并清除输入
+            if (result.code === 1) {
+              this.updateCaptcha()
+              this.captcha = ''
+            }
           }
 
           // 根据请求的结果, 进行不同的响应处理
