@@ -19,7 +19,7 @@
                     :disabled="!isRightPhone || computeTime > 0" 
                     class="get-verification btn" 
                     :class="{'right-phone-number': isRightPhone}"
-                    @click.prevent="getSmsCode"
+                    @click.prevent="sendSmsCode"
                   >
                     {{computeTime > 0 ? `短信已发送(${computeTime}s)` : '获取验证码'}}
                   </button>
@@ -77,13 +77,16 @@
 </template>
 
 <script>
+  import { Toast, MessageBox } from 'mint-ui'
+  import { reqSendCode } from '@/api'
+
   export default {
     name: 'Login',
 
     data() {
       return {
         baseUrl: process.env.VUE_APP_BASE_URL,
-        loginType: false, // true: 短信登录，false: 密码登录
+        loginType: true, // true: 短信登录，false: 密码登录
         phone: '', // 手机号
         smsCode: '', // 短信验证码
         name: '', // 用户名
@@ -102,23 +105,35 @@
 
     methods: {
       /*
-        获取短信验证码
+        发送短信验证码
       */
-      getSmsCode() {
+      async sendSmsCode() {
         // 将computeTime设置为计时的最大值
         this.computeTime = 59
         // 启动循环定时器，每隔1s将computeTime减1
         const intervalId = setInterval(() => {
-          this.computeTime--
           if (this.computeTime <= 0) {
             this.computeTime = 0
             clearInterval(intervalId)
+          } else {
+            this.computeTime--
           }
         }, 1000)
 
+        // 清除定时器
         this.$once('hook:beforeDestroy', () => { // 通过一个程序化的侦听器$once监听beforeDestroy生命周期钩子(此时在this.$once的回调函数内执行语句就相当于beforeDestroy生命周期钩子函数内执行语句)，在组件被销毁之前，清除定时器。 注：this.$once作用是监听一个自定义事件，但是只触发一次。一旦触发之后，监听器就会被移除。
           clearInterval(intervalId)
         })
+
+        // 发ajax请求，发送短信验证码
+        const result = await reqSendCode(this.phone)
+        if (result.code === 0) {
+          Toast('短信验证码已发送')
+        } else {
+          // 停止定时器
+          this.computeTime = 0
+          MessageBox('提示', result.msg || '短信验证码发送失败')
+        }
       },
 
       /*
