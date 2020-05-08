@@ -9,7 +9,9 @@ import {
 import {
   RECEIVE_ADDRESS,
   RECEIVE_CATEGORYS,
-  RECEIVE_SHOPS
+  RECEIVE_SHOPS,
+  RECEIVE_USER,
+  RESET_USER
 } from './mutation-types'
 
 
@@ -71,5 +73,19 @@ export default {
       const shops = result.data
       commit(RECEIVE_SHOPS, shops)
     }
+  },
+
+  /*
+    保存user的同步action
+  */
+  saveUser({ commit }, user) {
+    commit(RECEIVE_USER, { user })
+  },
+
+  /*
+    退出登录
+  */
+  logout({ commit }) {
+    commit(RESET_USER)
   }
 }

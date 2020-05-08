@@ -1,4 +1,5 @@
 import Vue from 'vue'
+import { Button } from 'mint-ui'
 import FastClick from 'fastclick' // 解决移动端浏览器上点击(click)响应延时0.3s问题，它消除了在移动浏览器上物理点击和触发点击事件之间的300毫秒延迟(为什么会有300ms延迟? 这样做的原因是，浏览器正在等待查看您是否正在实际执行双击)。但到2015年底，大多数移动浏览器——尤其是Chrome和Safari——不再有300毫秒的触摸延迟，因此fastclick在新浏览器上没有任何好处，并有可能给你的应用程序带来bug。仔细考虑你是否真的需要使用它。
 
 import App from './App'
@@ -15,6 +16,7 @@ Vue.config.productionTip = false // 设置为false以阻止vue在启动时生成
 // 注册全局组件
 Vue.component('Header', Header)
 Vue.component('Star', Star)
+Vue.component(Button.name, Button)
 
 /* 解决引入使用fastclick插件库后在苹果移动端浏览器上输入框(包括input和textarea)点击无响应问题的bug，即会产生输入框(包括input和textarea)点击无法获取焦点问题，只有双击或者长按的时候才能使input或textarea输入框获取到焦点的bug */
 FastClick.prototype.focus = function(targetElement) {
