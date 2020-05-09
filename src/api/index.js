@@ -17,7 +17,11 @@ export const reqAddress = (longitude, latitude) => ajax(`/position/${latitude},$
 /*
   2、获取食品分类列表
 */
-export const reqCategorys = () => ajax('/index_category')
+export const reqCategorys = () => ajax('/index_category', {
+  headers: {
+    needToken: true
+  }
+})
 
 /*
   3、根据经纬度获取商铺列表
@@ -26,6 +30,9 @@ export const reqShops = (longitude, latitude) => ajax('/shops', {
   params: {
     latitude,
     longitude
+  },
+  headers: {
+    needToken: true
   }
 })
 
@@ -57,6 +64,15 @@ export const reqPwdLogin = ({
 export const reqSmsLogin = (phone, code) => ajax.post('/login_sms', {
   phone,
   code
+})
+
+/*
+  7. 自动登录
+*/
+export const reqAutoLogin = () => ajax('/auto_login', {
+  headers: {
+    needToken: true
+  }
 })
 
 // export const reqBaiDuXxx = () => ajax(BASE2 + '/xxx') // 练习使用代理解决ajax跨域问题，另一个后台服务器(http://www.baidu.com)

@@ -7,5 +7,6 @@ export default {
   address: {}, // 地址信息对象
   categorys: [], // 食品分类列表
   shops: [], // 商铺列表
-  user: {} // 当前登录用户信息对象
+  user: {}, // 当前登录用户信息对象
+  token: localStorage.getItem('token_key') // 当前登录用户对应的token
 }
