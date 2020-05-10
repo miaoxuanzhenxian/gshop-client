@@ -9,7 +9,7 @@
     </div>
     <div class="shop-container">
       <ul class="shop-list" v-if="shops.length > 0">
-        <li class="shop-li border-1px" v-for="shop in shops" :key="shop.id">
+        <li class="shop-li border-1px" v-for="shop in shops" :key="shop.id" @click="$router.push(`/shop/${shop.id}`)">
           <a class="shop-li-a clearfix">
             <div class="shop-left">
               <img class="shop-img" :src="baseImgUrl + shop.image_path" :alt="shop.name">
