@@ -40,6 +40,7 @@
         Login
         FooterGuide的显示/隐藏: 通过路由的meta标识
 
+
 # day02
 ## 1. 启动后台应用并测试
     运行后台项目(启动mongodb服务),
@@ -121,8 +122,8 @@
     使用组件标签, 并传入相应的标签属性
     完成组件编码: 使用计算属性
 
-## day03
 
+# day03
 ## 1. 使用vue-cli3
     1). 创建项目
         npm remove vue-cli -g
@@ -159,14 +160,14 @@
                   }
                 }
 
-### 1. Login组件的纯前台交互功能 
+## 2. Login组件的纯前台交互功能 
     1). 切换2种登陆方式: loginWay
     2). 手机号格式验证: isRightPhone计算属性
     3). 倒计时的效果: computeTime + setInterval()
     4). 切换密码的显示/隐藏: isShowPwd + transition
     5). 前台表单验证: 使用vee-validate进行声明式表单验证
 
-### 2. Login组件的前后台交互功能
+## 3. Login组件的前后台交互功能
     1). 一次性图形验证码
         通过<img src="url">请求后台获取验证码图片显示
         点击回调中更新img的src, 并携带时间戳参数, 更新验证码
@@ -179,12 +180,13 @@
         发送ajax请求, 得到返回的结果
         根据结果的标识(code)来判断登陆请求是否成功
             1: 不成功, 显示提示
-            0. 成功, 保存user到state, 保存token到storage, 返回到个人中心
+            0. 成功, 保存user/token到state, 保存token到localStorage, 返回到个人中心
     5). 自动登录
+        在初始时，如果有token，但没有user信息，就发请求获取user实现自动登录
+    6). 退出登录
+        清除vuex中的state中的user和token，以及localStorage中的token
 
-## day04
-
-## 1. token的理解和使用
+## 4. token的理解和使用
     1). 作用
         a. 是一个包含特定信息的字符串:　id / 失效的时间
         a. 对请求进行一定的检查限制, 防止恶意请求
@@ -203,18 +205,20 @@
                 status为: 401: token过期了, 退出登陆(清除local中的token和state中user与token), 并跳转到登陆页面
                 status为: 404: 提示访问的资源不存在
 
-## 2. 使用vee-validate进行表单验证
+
+# day04
+## 1. 使用vee-validate进行表单验证
     参考: vee-validate使用.md
 
-## 3. 使用mint-ui组件库
+## 2. 使用mint-ui组件库
     1). 按需引入打包
     2). 使用button/Toast/MessageBox
 
-## 4. 搭建商家的整体界面
+## 3. 搭建商家的整体界面
     1). 拆分界面路由: 嵌套(二级)路由
     2). 路由的定义/配置|使用
 
-## 5. json的理解和设计
+## 4. json的理解和设计
     0. json是什么?
         具有特定结构的字符串
     1. 整体结构
@@ -232,17 +236,18 @@
     6. mock数据与真实数据
         结构要一样, 值可以不一样
 
-## 6. mockjs的理解和使用
+## 5. mockjs的理解和使用
     mockjs是什么: 用来提供mock数据接口的js库
     mockjs作用: 拦截ajax请求, 返回根据指定结构生成的随机数据
     mockjs使用: Mock.mock(url, template)
 
-## 7. 使用vuex管理商家相关的数据
+## 6. 使用vuex管理商家相关的数据
     goods
     ratings
     info
 
-## day05
+
+# day05
 ## 1. vuex的多模块编码
     1). 为什么vuex要有多模块
         对中大型项目来说, 需要管理的状态数据较多, 不进行多模块方式拆分, mutations/actions模块会比较臃肿
@@ -348,7 +353,7 @@
     如何判断变化了?
     scroll.scrollToElement(li)
 
-### 4. CartControl组件
+## 4. CartControl组件
     1). 给food设计count属性, 并由actions提供更新的方法
     2). 问题: 更新状态数据, 对应的界面不变化
       原因: 给一个已有绑定的对象直接添加一个新的属性, 这个属性没有数据绑定
@@ -357,11 +362,12 @@
         this.$set(obj, 'xxx', value)才有数据绑定
     3). vue transition
 
-## day06
-### 1. Food组件
+
+# day06
+## 1. Food组件
     1). 父组件调用子组件的方法: this.$refs.child.method()
     
-### 2. ShopCart组件
+## 2. ShopCart组件
     1). 将购物项列表数据定义到vuex的state中: cartFoods
     2). 在vuex的getters中定义: totalCount, totalPrice
     3). 解决几个功能性bug
@@ -371,14 +377,14 @@
         d. 购物车列表中点一次添加, 会增加多项
         e. 原本可以滑动的列表, 关闭再打开后不能再滑动了
 
-### 3. ShopRatings组件和RatingsFilter组件
+## 3. ShopRatings组件和RatingsFilter组件
     1). 使用计算属性对列表进行过滤显示
     2). vue组件间通信
         子向父: 函数props, vue自定义事件
         任意组件间: 基于vue自定义事件的bus/pubsub
     3). 自定义过滤器计算逻辑: 日期时间的格式化
 
-### 4. ShopInfo组件
+## 4. ShopInfo组件
     1). 通过JS动态修改元素的样式宽度
     2). 解决在当前路由路径上刷新的异常问题
         在mounted()中, 判断只有当info中有数据才创建BScroll的实例
