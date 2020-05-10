@@ -2,12 +2,16 @@
   <section class="msite">
     <!-- 首页头部 -->
     <Header :title="address.name || '正在定位中...'">
-      <span class="header-search" slot="left">
-        <i class="iconfont icon-sousuo"></i>
-      </span>
-      <span class="header-login" slot="right">
-        <span>登录|注册</span>
-      </span>
+      <template #left>
+        <span class="header-search">
+          <i class="iconfont icon-sousuo"></i>
+        </span>
+      </template>
+      <template v-slot:right>
+        <span class="header-login">
+          <span>登录|注册</span>
+        </span>
+      </template>
     </Header>
     <!-- 首页导航 -->
     <nav class="msite-nav border-1px">
