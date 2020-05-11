@@ -221,20 +221,66 @@
 ## 4. json的理解和设计
     0. json是什么?
         具有特定结构的字符串
-    1. 整体结构
-        1). json对象: {key1: value1, key2: value2}
-        2). json数组: [value1, value2]
+    1. json的整体结构
+        1). json对象: {key1: value1, key2: value2, ...}
+        2). json数组: [value1, value2, ...]
+        key是什么?: 只能是字符串，而且必须是双引号包裹起来的字符串，不能是单引号
+        value是什么?: string/number/boolean/{}/[]
     2. json的组成
         1). 结构: 数据类型和标识名称  不显示到界面上
         2). 数据值: 其它, 显示到界面
-    3. key是什么?  
-        字符串(必须用双向包起来)
-    4. value是什么?
-        string/number/boolean/{}/[]
-    5. 设计
+    3. json与js的关系
+        json本身是一种特定格式的js字符串
+        json对象本身是字符串，与js对象不一样不相等，但与js对象可以相互转换
+        json数组本身是字符串，与js数组不一样不相等，但与js数组可以相互转换
+    5. 设计json数据
         {}与[]的选择
-    6. mock数据与真实数据
-        结构要一样, 值可以不一样
+        {
+            "goods": [
+                {
+                "name": "优惠",
+                "icon": "url",
+                "foods": [
+                    {
+                    "name": "南瓜粥",
+                    "price": 9
+                    }
+                ]
+                },
+                {
+                "name": "折扣",
+                "icon": "url",
+                "foods": [
+                    {
+                    "name": "娃娃菜炖豆腐",
+                    "price": 17
+                    },
+                    {
+                    "name": "手撕包菜",
+                    "price": 16
+                    }
+                ]
+                }
+            ],
+            "ratings": [
+                {
+
+                }
+            ],
+            "info": {
+
+            }
+        }
+    6.  mock的json数据与真实接口数据的关系
+        结构：类型和名称
+        值(数据)
+        结构要一样，而值(数据)可以不一样
+
+# 5. mock的json数据与真实接口数据的关系
+    结构：类型和名称
+    值(数据)
+    结构要一样，而值(数据)可以不一样
+
 
 ## 5. mockjs的理解和使用
     mockjs是什么: 用来提供mock数据接口的js库
