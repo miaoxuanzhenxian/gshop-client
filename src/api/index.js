@@ -75,6 +75,33 @@ export const reqAutoLogin = () => ajax('/auto_login', {
   }
 })
 
+/*
+  8. 获取商家信息
+*/
+export const reqShopInfo = (id) => ajax('/shop_info', {
+  params: {
+    id
+  }
+})
+
+/*
+  9. 获取商家评价数组
+*/
+export const reqShopRatings = (id) => ajax('/shop_ratings', {
+  params: {
+    id
+  }
+})
+
+/*
+  10. 获取商家商品数组
+*/
+export const reqShopGoods = (id) => ajax('/shop_goods', {
+  params: {
+    id
+  }
+})
+
 // export const reqBaiDuXxx = () => ajax(BASE2 + '/xxx') // 练习使用代理解决ajax跨域问题，另一个后台服务器(http://www.baidu.com)
 
 // // 简单的测试一下接口请求函数

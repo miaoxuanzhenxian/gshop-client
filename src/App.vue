@@ -16,8 +16,8 @@
     },
     
     mounted () {
-      this.$store.dispatch('getAddress')
-      this.$store.dispatch('autoLogin')
+      this.$store.dispatch('msite/getAddress')
+      this.$store.dispatch('user/autoLogin')
     }
   }
 </script>

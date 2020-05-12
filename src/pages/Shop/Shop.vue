@@ -29,6 +29,13 @@
 
     components: {
       ShopHeader
+    },
+
+    mounted() {
+      const id = this.id
+      this.$store.dispatch('shop/getShopGoods', { id })
+      this.$store.dispatch('shop/getShopRatings', { id })
+      this.$store.dispatch('shop/getShopInfo', { id })
     }
   }
 </script>

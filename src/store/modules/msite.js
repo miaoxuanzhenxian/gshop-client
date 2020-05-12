@@ -1,24 +1,40 @@
 /*
-  包含n个间接更新状态数据的方法的对象
+  管理msite功能模块相关状态数据的vuex模块
 */
-import {
-  reqAddress,
-  reqCategorys,
-  reqShops,
-  reqAutoLogin
-} from '../api'
 import {
   RECEIVE_ADDRESS,
   RECEIVE_CATEGORYS,
-  RECEIVE_SHOPS,
-  RECEIVE_USER,
-  RECEIVE_TOKEN,
-  RESET_USER,
-  RESET_TOKEN
-} from './mutation-types'
+  RECEIVE_SHOPS
+} from '../mutation-types'
+
+import {
+  reqAddress,
+  reqCategorys,
+  reqShops
+} from '@/api'
 
 
-export default {
+const state = {
+  longitude: 116.36867, // 经度
+  latitude: 40.10038, // 纬度
+  address: {}, // 地址信息对象
+  categorys: [], // 食品分类列表
+  shops: [] // 商铺列表
+}
+
+const mutations = {
+  [RECEIVE_ADDRESS](state, address) {
+    state.address = address
+  },
+  [RECEIVE_CATEGORYS](state, categorys) {
+    state.categorys = categorys
+  },
+  [RECEIVE_SHOPS](state, shops) {
+    state.shops = shops
+  }
+}
+
+const actions = {
   /*
     获取当前地址信息对象的异步action
   */
@@ -32,7 +48,7 @@ export default {
       commit(RECEIVE_ADDRESS, address)
     }
   },
-  
+
   // /*
   //   获取食品分类列表的异步action
   //   方式2: callback + nextTick() 解决创建swiper对象之后不能正常轮播的问题
@@ -63,7 +79,7 @@ export default {
       commit(RECEIVE_CATEGORYS, categorys)
     }
   },
-  
+
   /*
     获取商铺列表的异步action
   */
@@ -76,42 +92,15 @@ export default {
       const shops = result.data
       commit(RECEIVE_SHOPS, shops)
     }
-  },
-
-  /*
-    保存user的同步action
-  */
-  saveUser({ commit }, user) {
-    const token = user.token
-    // 将token保存到localStorage中
-    localStorage.setItem('token_key', token)
-    // 将token保存到vuex的state中
-    commit(RECEIVE_TOKEN, { token })
-
-    // 删除user中的token
-    delete user.token
-    commit(RECEIVE_USER, { user })
-  },
-
-  /*
-    退出登录
-  */
-  logout({ commit }) {
-    commit(RESET_USER)
-    commit(RESET_TOKEN)
-    localStorage.removeItem('token_key')
-  },
-
-  /*
-    自动登录的异步action
-  */
-  async autoLogin({ commit, state }) {
-    if (state.token) {
-      const result = await reqAutoLogin()
-      if (result.code === 0) {
-        const user = result.data
-        commit(RECEIVE_USER, { user })
-      }
-    }
   }
+}
+
+const getters = {}
+
+export default {
+  namespaced: true, // 命名空间
+  state,
+  mutations,
+  actions,
+  getters
 }

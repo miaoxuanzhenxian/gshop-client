@@ -59,7 +59,10 @@
     },
 
     computed: {
-      ...mapState(['address', 'categorys']),
+      ...mapState({
+        address: state => state.msite.address, // 函数的返回值作为属性值
+        categorys: state => state.msite.categorys
+      }),
 
       /*
         根据分类的一维数组生成二维数组
@@ -127,12 +130,12 @@
 
     async mounted() {
       // 分发action, 异步获取商家列表
-      this.$store.dispatch('getShops')
+      this.$store.dispatch('msite/getShops')
       // /*
       //   分发action, 异步获取分类列表,其中内部要发请求，是异步操作，需要一定的时间
       //   方式2: callback + nextTick() 解决创建swiper对象之后不能正常轮播的问题
       // */
-      // this.$store.dispatch('getCategorys', () => { // categorys数据变化了
+      // this.$store.dispatch('msite/getCategorys', () => { // categorys数据变化了
       //   // 将回调延迟到下次 DOM 更新循环之后执行。在修改数据之后立即使用它，然后等待 DOM 更新
       //   this.$nextTick(() => {
       //     /*
@@ -158,7 +161,7 @@
         分发action, 异步获取分类列表,其中内部要发请求，是异步操作，需要一定的时间
         方式3: 利用dispatch()返回的promise 解决创建swiper对象之后不能正常轮播的问题
       */
-      await this.$store.dispatch('getCategorys') // 返回的Promise在状态更新且界面更新之后才成功
+      await this.$store.dispatch('msite/getCategorys') // 返回的Promise在状态更新且界面更新之后才成功
       /*
         创建Swiper对象的时机？ 必须在列表页面显示之后，才能正常工作、正常轮播
       */

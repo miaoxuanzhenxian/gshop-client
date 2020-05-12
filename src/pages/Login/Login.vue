@@ -171,7 +171,7 @@
           if (result.code === 0) {
             const user = result.data
             // 将user信息保存到vuex的state中
-            this.$store.dispatch('saveUser', user)
+            this.$store.dispatch('user/saveUser', user)
 
             // 跳转到个人中心
             this.$router.replace('/profile')

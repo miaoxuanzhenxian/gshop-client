@@ -14,7 +14,7 @@ import axios from 'axios'
 import qs from 'qs'
 import { Toast } from 'mint-ui'
 
-import store from '../vuex/store'
+import store from '../store'
 import router from '../router'
 
 
@@ -40,7 +40,7 @@ instance.interceptors.request.use(config => {
 
   // 5. 如果是需要携带token的请求，从vuex的state中取出token
   if (config.headers.needToken) {
-    const token = store.state.token
+    const token = store.state.user.token
 
     if (!token) { // 1). token没有值，不发请求，直接进入失败的流程
       const error = new Error('没有token, 不能发请求')
@@ -76,7 +76,7 @@ instance.interceptors.response.use(response => {
         // 提示
         Toast(response.data.message)
         // 退出登录,清除vuex中的user、token及localStorage中的token
-        store.dispatch('logout')
+        store.dispatch('user/logout')
         // 跳转到登录界面
         router.replace('/login')
       }

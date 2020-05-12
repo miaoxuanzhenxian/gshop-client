@@ -118,14 +118,16 @@
     name: 'Profile',
 
     computed: {
-      ...mapState(['user'])
+      ...mapState({
+        user: state => state.user.user
+      })
     },
 
     methods: {
       logout() {
         MessageBox.confirm('确定退出吗?').then(
           () => { // 点击确认
-            this.$store.dispatch('logout')
+            this.$store.dispatch('user/logout')
           },
           () => {} // 点击取消
         )
