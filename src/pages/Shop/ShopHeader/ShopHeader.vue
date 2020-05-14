@@ -31,7 +31,7 @@
 
     <div class="shop-header-discounts" v-if="info.supports" @click="isShowSupports = true">
       <div class="discounts-left">
-        <div class="activity activity-green">
+        <div class="activity" :class="supportClasses[info.supports[0].type]">
           <span class="content-tag">
             <span class="mini-tag">{{info.supports[0].name}}</span>
           </span>
@@ -54,30 +54,30 @@
           </h2>
           <ul class="brief-modal-msg">
             <li>
-              <h3>3.5</h3>
+              <h3>{{info.score}}</h3>
               <p>评分</p>
             </li>
             <li>
-              <h3>90单</h3>
+              <h3>{{info.sellCount}}单</h3>
               <p>月售</p>
             </li>
             <li>
               <h3>硅谷专送</h3>
-              <p>约28分钟</p>
+              <p>约{{info.deliveryTime}}分钟</p>
             </li>
             <li>
-              <h3>4元</h3>
+              <h3>{{info.deliveryPrice}}元</h3>
               <p>配送费用</p>
             </li>
             <li>
-              <h3>1000m</h3>
+              <h3>{{info.distance}}</h3>
               <p>距离</p>
             </li>
           </ul>
           <h3 class="brief-modal-title">
             <span>公告</span></h3>
             <div class="brief-modal-notice">
-              是以粥为特色的中式营养快餐，自2004年10月18日创立“嘉和一品”品牌至今
+              {{info.bulletin}}
             </div>
           <div class="mask-footer" @click="isShowBulletin = false">
             <span class="iconfont icon-close"></span>
@@ -93,23 +93,11 @@
           <h2 class="activity-sheet-title">
           优惠活动</h2>
           <ul class="list">
-            <li class="activity-item activity-green">
+            <li class="activity-item" :class="supportClasses[support.type]" v-for="(support, index) in info.supports" :key="index">
               <span class="content-tag">
-                <span class="mini-tag">首单</span>
+                <span class="mini-tag">{{support.name}}</span>
               </span>
-              <span class="activity-content">新用户下单立减17元(不与其它活动同享)</span>
-            </li>
-            <li class="activity-item activity-red">
-              <span class="content-tag">
-                <span class="mini-tag">满减</span>
-              </span>
-              <span class="activity-content">满35减19，满65减35</span>
-            </li>
-            <li class="activity-item activity-orange">
-              <span class="content-tag">
-                <span class="mini-tag">特价</span>
-              </span>
-              <span class="activity-content">【立减19.5元】欢乐小食餐</span>
+              <span class="activity-content">{{support.content}}</span>
             </li>
           </ul>
           <div class="activity-sheet-close" @click="isShowSupports = false">
@@ -131,7 +119,8 @@
     data() {
       return {
         isShowBulletin: false,
-        isShowSupports: false
+        isShowSupports: false,
+        supportClasses: ['activity-green', 'activity-red', 'activity-orange']
       }
     },
 
@@ -275,6 +264,15 @@
         .activity
           display flex
           align-items center
+          &.activity-green
+            .content-tag
+              background-color rgb(112, 188, 70)
+          &.activity-red
+            .content-tag
+              background-color rgb(240, 115, 115)
+          &.activity-orange
+            .content-tag
+              background-color: rgb(241, 136, 79)
           .content-tag
             border-radius 1px
             width 25px
@@ -284,7 +282,6 @@
             font-style normal
             font-weight 700
             position relative
-            background-color rgb(112, 188, 70)
             .mini-tag
               position absolute
               left 0
@@ -453,7 +450,7 @@
         padding 20px 30px
         box-sizing border-box
         // transition transform .5s
-        will-change transform
+        will-change transform // 用gpu来渲染动画，提前告诉浏览器用gpu渲染transform引起的动画，让浏览器、gpu提前准备好，以此来提高渲染动画的性能及速度
         color #333
         .activity-sheet-title
           text-align center
