@@ -1,15 +1,253 @@
 <template>
   <div>
-    Goods
+    <div class="goods">
+      <div class="menu-wrapper" ref="leftWrapper">
+        <ul>
+          <!-- todo current类名 -->
+          <li class="menu-item" :class="{current: index === currentIndex}"  v-for="(good, index) in goods" :key="good.name">
+            <span class="text border-1px">
+              <img class="icon" v-if="good.icon" :src="good.icon">
+              {{good.name}}
+            </span>
+          </li>
+        </ul>
+      </div>
+
+      <div class="foods-wrapper" ref="rightWrapper">
+        <ul ref="rightUl" id="testaa">
+          <li class="food-list-hook" v-for="good in goods" :key="good.name" ref="foodList">
+            <h1 class="title">{{good.name}}</h1>
+            <ul ref="">
+              <li class="food-item border-1px" v-for="food in good.foods" :key="food.name">
+                <div class="icon">
+                  <img width="57" height="57" :src="food.icon">
+                </div>
+                <div class="content">
+                  <h2 class="name">{{food.name}}</h2>
+                  <p class="desc">{{food.description}}</p>
+                  <div class="extra">
+                    <span class="count">月售{{food.sellCount}}份</span>
+                    <span>好评率{{food.rating}}%</span></div>
+                  <div class="price">
+                    <span class="now">￥{{food.price}}</span>
+                    <span class="old" v-if="food.oldPrice">￥{{food.oldPrice}}</span>
+                  </div>
+                  <div class="cartcontrol-wrapper">
+                    CartControl组件
+                  </div>
+                </div>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </div>
+    </div>
   </div>
 </template>
 
 <script>
+  import { mapState } from 'vuex'
+  import BScroll from 'better-scroll'
+
   export default {
-    name: 'Goods'
+    name: 'Goods',
+
+    data() {
+      return {
+        scrollY: 0, // 右侧滑动的y轴坐标: scrollY, 初始为0, 滑动右侧过程中实时改变、更新
+        tops: [0, 5, 8, 12] // 右侧所有分类li的top的数组: tops, 初始值为[], 在列表显示之后统计一次即可
+      }
+    },
+
+    computed: {
+      ...mapState({
+        goods: state => state.shop.goods
+      }),
+
+      /*
+        当前分类的下标
+      */
+      currentIndex() {
+        const { scrollY, tops } = this
+        
+        return tops.findIndex((top, index) => scrollY >= top && scrollY < tops[index + 1])
+      }
+    },
+
+    mounted() {
+      if (this.goods.length > 0) { // 如果数据已经有了
+        this._initScroll()
+        this._initTops()
+      }
+    },
+
+    watch: {
+      goods() { // goods开始没有数据了，后来有了数据，注意better-scroll老版本需要new BScroll()在对应的状态数据更新且对应的界面更新之后才能正常运行，因此需要watch监测goods这一步; 但在新版本better-scroll中，则已经内部处理了解决了这个问题，因此不再需要new BScroll()在对应的状态数据更新且对应的界面更新之后了，也就不再需要watch监测goods这一步了，因此只需要在mounted生命周期方法中直接new BScroll()即可
+        this.$nextTick(() => {
+          this._initScroll()
+          this._initTops()
+        })
+      }
+    },
+
+    methods: {
+      // 方法名加下划线是为了与事件回调函数方法相区分
+      _initScroll() {
+        new BScroll(this.$refs.leftWrapper, {
+          // click: true
+        })
+
+        const rightScroll = new BScroll(this.$refs.rightWrapper, {
+          // click: true,
+          // probeType: 2 // 触摸  实时(高频)
+          // probeType: 3 // 触摸/惯性 实时(高频)
+          probeType: 1 // 触摸 非实时(低频) 会减少性能、效率的损耗
+        })
+
+        // 给rightScroll绑定scroll的监听
+        rightScroll.on('scroll', ({ y }) => {
+          this.scrollY = Math.abs(y)
+        })
+        // 给rightScroll绑定scrollEnd的监听
+        rightScroll.on('scrollEnd', ({ y }) => {
+          this.scrollY = Math.abs(y)
+        })
+      },
+      
+      // 方法名加下划线是为了与事件回调函数方法相区分
+      _initTops() {
+        const tops = []
+        let top = 0
+        tops.push(top)
+
+        // const lis = this.$refs.rightUl.children
+      //  /* 通过.children获取的节点集合虽然是一个类数组(伪数组)，但其内部内置了处理了forEach()方法，因此它可以调用forEach方法；除此之外通过document.querySelectorAll()方法获得的节点集合也是一个类数组(伪数组)，其内部也内置了处理了forEach()方法，因此它也可以调用forEach方法 */
+      //   lis.forEach(li => {
+      //     console.log(li)
+      //   })
+
+        // // 通过Array.prototype.forEach.call(lis, li => {})方式可以让类数组(伪数组)调用forEach()方法
+        // Array.prototype.forEach.call(lis, li => {
+        //   top += li.clientHeight
+        //   tops.push(top)
+        // })
+        
+        // 当 v-for 用于元素或组件的时候，使用ref引用信息将是包含DOM节点或组件实例的真数组，哪怕只有一个时，只要含有v-for，那得到的也是含有一个元素的真数组
+        const lis = this.$refs.foodList
+        lis.forEach(li => {
+          top += li.clientHeight
+          tops.push(top)
+        })
+        // 更新tops数据,在循环外面赋值，这样就只更新一次，提高效率
+        this.tops = tops
+      }
+    }
   }
 </script>
 
-<style lang="stylus" rel="stylesheet/stylus" scoped>
-  
+<style lang="stylus" rel="stylesheet/stylus">
+  @import '~@/assets/styles/mixins.styl'
+
+  .goods
+    display: flex
+    position: absolute
+    top: 225px
+    bottom: 46px
+    width: 100%
+    background: #fff;
+    overflow: hidden
+    .menu-wrapper
+      flex: 0 0 80px
+      width: 80px
+      background: #f3f5f7
+      .menu-item
+        display: table
+        height: 54px
+        width: 56px
+        padding: 0 12px
+        line-height: 14px
+        &.current
+          position: relative
+          z-index: 10
+          margin-top: -1px
+          background: #fff
+          color: $green
+          font-weight: 700
+          .text
+            border-none()
+        .icon
+          display: inline-block
+          vertical-align: top
+          width: 12px
+          height: 12px
+          margin-right: 2px
+          background-size: 12px 12px
+          background-repeat: no-repeat
+        .text
+          display: table-cell
+          width: 56px
+          vertical-align: middle
+          font-size: 12px
+          &::before
+            height 1px
+            top 100%
+            border-bottom 1px solid rgba(7, 17, 27, 0.1)
+    .foods-wrapper
+      flex: 1
+      .title
+        padding-left: 14px
+        height: 26px
+        line-height: 26px
+        border-left: 2px solid #d9dde1
+        font-size: 12px
+        color: rgb(147, 153, 159)
+        background: #f3f5f7
+      .food-item
+        display: flex
+        margin: 18px
+        padding-bottom: 18px
+        // bottom-border-1px(rgba(7, 17, 27, 0.1))
+        &::before
+          height 1px
+          top 100%
+          border-bottom 1px solid rgba(7, 17, 27, 0.1)
+        &:last-child
+          border-none()
+          margin-bottom: 0
+        .icon
+          flex: 0 0 57px
+          margin-right: 10px
+        .content
+          flex: 1
+          .name
+            margin: 2px 0 8px 0
+            height: 14px
+            line-height: 14px
+            font-size: 14px
+            color: rgb(7, 17, 27)
+          .desc, .extra
+            line-height: 10px
+            font-size: 10px
+            color: rgb(147, 153, 159)
+          .desc
+            line-height: 12px
+            margin-bottom: 8px
+          .extra
+            .count
+              margin-right: 12px
+          .price
+            font-weight: 700
+            line-height: 24px
+            .now
+              margin-right: 8px
+              font-size: 14px
+              color: rgb(240, 20, 20)
+            .old
+              text-decoration: line-through
+              font-size: 10px
+              color: rgb(147, 153, 159)
+          .cartcontrol-wrapper
+            position: absolute
+            right: 0
+            bottom: 12px
 </style>

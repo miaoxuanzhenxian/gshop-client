@@ -15,7 +15,7 @@
     </Header>
     <!-- 首页导航 -->
     <nav class="msite-nav border-1px">
-      <div class="swiper-container" v-if="categorys.length > 0">
+      <div class="swiper-container" v-if="categorys.length > 0" ref="msiteNavSwiper">
         <div class="swiper-wrapper">
           <div class="swiper-slide" v-for="(categories, index) in categoriesArr" :key="index">
             <a href="javascript:" class="link-to-food" v-for="c in categories" :key="c.id">
@@ -165,13 +165,20 @@
       /*
         创建Swiper对象的时机？ 必须在列表页面显示之后，才能正常工作、正常轮播
       */
-      new Swiper('.swiper-container', {
+      new Swiper(this.$refs.msiteNavSwiper, { // 用ref好一些，防止全局有重名的
         loop: true, // 循环模式
         // 如果需要分页器
         pagination: {
           el: '.swiper-pagination'
         }
       })
+      // new Swiper('.swiper-container', {
+      //   loop: true, // 循环模式
+      //   // 如果需要分页器
+      //   pagination: {
+      //     el: '.swiper-pagination'
+      //   }
+      // })
     }
   }
 </script>
