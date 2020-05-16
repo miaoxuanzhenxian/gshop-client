@@ -3,8 +3,8 @@
     <div class="goods">
       <div class="menu-wrapper" ref="leftWrapper">
         <ul>
-          <!-- todo current类名 -->
-          <li class="menu-item" :class="{current: index === currentIndex}"  v-for="(good, index) in goods" :key="good.name">
+          <li class="menu-item" :class="{current: index === currentIndex}"  
+            v-for="(good, index) in goods" :key="good.name" ref="menuItems" @click="selectMenuItem(index)">
             <span class="text border-1px">
               <img class="icon" v-if="good.icon" :src="good.icon">
               {{good.name}}
@@ -55,7 +55,7 @@
     data() {
       return {
         scrollY: 0, // 右侧滑动的y轴坐标: scrollY, 初始为0, 滑动右侧过程中实时改变、更新 
-        tops: [0, 5, 8, 12] // 右侧所有分类li的top的数组: tops, 初始值为[], 在列表显示之后统计一次即可
+        tops: [] // 右侧所有分类li的top的数组: tops, 初始值为[], 在列表显示之后统计一次即可
       }
     },
 
@@ -69,7 +69,6 @@
       */
       currentIndex() {
         const { scrollY, tops } = this
-        
         return tops.findIndex((top, index) => scrollY >= top && scrollY < tops[index + 1])
       }
     },
@@ -87,29 +86,38 @@
           this._initScroll()
           this._initTops()
         })
+      },
+
+      /*
+        监控currentIndex计算属性，当currentIndex发生变化，计算得到新的下标时，让左侧列表滑动到新下标对应的li处，即让左侧列表滑动到当前分类处; 但若左侧列表因为高度不够等原因不能滑动到对应的li处，则better-scroll库在内部对这种情况做了自动处理，会使得其滑动到在已有高度允许内的极限处，但不会超过已有高度范围，即不会强行超过已有高度允许范围到达对应的li处，但会到达对应的li的极限处，至少会让li处于可见范围内; 于是这样就以此来实现了让左侧当前分类在右侧滑动时始终可见的功能
+      */
+      currentIndex(newValue) {
+        const li = this.$refs.menuItems[newValue]
+        // 让左侧列表滑动到新下标对应的li处，即让左侧列表滑动到当前分类处
+        this.leftScroll.scrollToElement(li, 300)
       }
     },
 
     methods: {
       // 方法名加下划线是为了与事件回调函数方法相区分
       _initScroll() {
-        new BScroll(this.$refs.leftWrapper, {
-          // click: true
+        this.leftScroll = new BScroll(this.$refs.leftWrapper, {
+          click: true // 分发自定义的click点击事件
         })
 
-        const rightScroll = new BScroll(this.$refs.rightWrapper, {
-          // click: true,
-          // probeType: 2 // 触摸  实时(高频)
-          // probeType: 3 // 触摸/惯性 实时(高频)
-          probeType: 1 // 触摸 非实时(低频) 会减少性能、效率的损耗
+        this.rightScroll = new BScroll(this.$refs.rightWrapper, {
+          click: true, // 分发自定义的click点击事件
+          // probeType: 2 // 触摸滑动  实时(高频)
+          // probeType: 3 // 触摸/惯性/编码滑动  实时(高频)  注：触摸/惯性/编码滑动时都会触发已经监听的scroll事件
+          probeType: 1 // 触摸滑动  非实时(低频)  会减少性能、效率的损耗
         })
 
         // 给rightScroll绑定scroll的监听
-        rightScroll.on('scroll', ({ y }) => {
+        this.rightScroll.on('scroll', ({ y }) => {
           this.scrollY = Math.abs(y)
         })
-        // 给rightScroll绑定scrollEnd的监听
-        rightScroll.on('scrollEnd', ({ y }) => {
+        // 给rightScroll绑定scrollEnd的监听，触摸/惯性/编码滑动时都会触发已经监听的scrollEnd事件
+        this.rightScroll.on('scrollEnd', ({ y }) => {
           this.scrollY = Math.abs(y)
         })
       },
@@ -140,6 +148,17 @@
         })
         // 更新tops数据,在循环外面赋值，这样就只更新一次，提高效率
         this.tops = tops
+      },
+
+      selectMenuItem(index) {
+        // 得到对应的top
+        const top = this.tops[index]
+
+        // 立即更新scrollY
+        this.scrollY = top
+
+        // 让右侧列表滑动到对应位置
+        this.rightScroll.scrollTo(0, -top, 300)
       }
     }
   }

@@ -6,6 +6,12 @@ import shop from './shop.json' // 加载json文件得到的是解析后的对应
 
 
 const baseUrl = process.env.VUE_APP_BASE_URL
+
+// 指定被拦截的 Ajax 请求的响应时间，单位是毫秒。值可以是正整数，例如400，表示400毫秒后才会返回响应内容；也可以是横杠 '-' 风格的字符串，例如 '200-600'，表示响应时间介于 200 和 600 毫秒之间。默认值是'10-100'
+Mock.setup({ 
+  timeout: 400 // 表示400毫秒后才会返回响应内容；
+})
+
 // goods接口
 // Mock.mock(baseUrl + '/shop_goods', { code: 0, data: shop.goods })
 // Mock.mock(/\/shop_goods\?id=/, { code: 0, data: shop.goods })

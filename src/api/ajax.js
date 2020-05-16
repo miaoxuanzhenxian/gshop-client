@@ -12,7 +12,7 @@
 */
 import axios from 'axios'
 import qs from 'qs'
-import { Toast } from 'mint-ui'
+import { Toast, Indicator } from 'mint-ui'
 
 import store from '../store'
 import router from '../router'
@@ -32,6 +32,9 @@ const instance = axios.create({
 
 // 添加请求拦截器
 instance.interceptors.request.use(config => {
+  // 6. 请求loading, 在请求前显示请求loading
+  Indicator.open()
+
   const { method, data } = config
   // 1、对post请求体参数进行urlencode处理, 而不使用默认的json方式(后台接口不支持): 请求拦截器
   if (method.toLowerCase() === 'post' && Object.prototype.toString.call(data) === '[object Object]') {
@@ -55,9 +58,15 @@ instance.interceptors.request.use(config => {
 
 // 添加响应拦截器
 instance.interceptors.response.use(response => {
+  // 6. 请求loading, 在请求完成后，不管是成功还是失败，都要隐藏请求loading
+  Indicator.close()
+
   // 2. 异步请求成功的结果数据不是response, 而是response.data: 响应拦截器的成功回调
   return response.data
 }, error => { // 3. 统一处理请求异常、错误：响应拦截器的失败回调
+  // 6. 请求loading, 在请求完成后，不管是成功还是失败，都要隐藏请求loading
+  Indicator.close()
+
   const { response, status, message } = error
 
   if (!response) { // 发请求前失败，发请求前的异常、错误
