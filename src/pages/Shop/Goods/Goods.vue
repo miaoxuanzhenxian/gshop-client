@@ -1,47 +1,47 @@
 <template>
-  <div>
-    <div class="goods">
-      <div class="menu-wrapper" ref="leftWrapper">
-        <ul>
-          <li class="menu-item" :class="{current: index === currentIndex}"  
-            v-for="(good, index) in goods" :key="good.name" ref="menuItems" @click="selectMenuItem(index)">
-            <span class="text border-1px">
-              <img class="icon" v-if="good.icon" :src="good.icon">
-              {{good.name}}
-            </span>
-          </li>
-        </ul>
-      </div>
-
-      <div class="foods-wrapper" ref="rightWrapper">
-        <ul ref="rightUl" id="testaa">
-          <li class="food-list-hook" v-for="good in goods" :key="good.name" ref="foodList">
-            <h1 class="title">{{good.name}}</h1>
-            <ul ref="">
-              <li class="food-item border-1px" v-for="food in good.foods" :key="food.name">
-                <div class="icon">
-                  <img width="57" height="57" :src="food.icon">
-                </div>
-                <div class="content">
-                  <h2 class="name">{{food.name}}</h2>
-                  <p class="desc">{{food.description}}</p>
-                  <div class="extra">
-                    <span class="count">月售{{food.sellCount}}份</span>
-                    <span>好评率{{food.rating}}%</span></div>
-                  <div class="price">
-                    <span class="now">￥{{food.price}}</span>
-                    <span class="old" v-if="food.oldPrice">￥{{food.oldPrice}}</span>
-                  </div>
-                  <div class="cartcontrol-wrapper">
-                    CartControl组件
-                  </div>
-                </div>
-              </li>
-            </ul>
-          </li>
-        </ul>
-      </div>
+  <div class="goods">
+    <div class="menu-wrapper" ref="leftWrapper">
+      <ul>
+        <li class="menu-item" :class="{current: index === currentIndex}"  
+          v-for="(good, index) in goods" :key="good.name" ref="menuItems" @click="selectMenuItem(index)">
+          <span class="text border-1px">
+            <img class="icon" v-if="good.icon" :src="good.icon">
+            {{good.name}}
+          </span>
+        </li>
+      </ul>
     </div>
+
+    <div class="foods-wrapper" ref="rightWrapper">
+      <ul ref="rightUl" id="testaa">
+        <li class="food-list-hook" v-for="good in goods" :key="good.name" ref="foodList">
+          <h1 class="title">{{good.name}}</h1>
+          <ul ref="">
+            <li class="food-item border-1px" v-for="food in good.foods" :key="food.name">
+              <div class="icon">
+                <img width="57" height="57" :src="food.icon">
+              </div>
+              <div class="content">
+                <h2 class="name">{{food.name}}</h2>
+                <p class="desc">{{food.description}}</p>
+                <div class="extra">
+                  <span class="count">月售{{food.sellCount}}份</span>
+                  <span>好评率{{food.rating}}%</span></div>
+                <div class="price">
+                  <span class="now">￥{{food.price}}</span>
+                  <span class="old" v-if="food.oldPrice">￥{{food.oldPrice}}</span>
+                </div>
+                <div class="cartcontrol-wrapper">
+                  <CartControl :food="food" />
+                </div>
+              </div>
+            </li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+
+    <ShopCart />
   </div>
 </template>
 
@@ -49,8 +49,14 @@
   import { mapState } from 'vuex'
   import BScroll from 'better-scroll'
 
+  import ShopCart from './ShopCart/ShopCart'
+
   export default {
     name: 'Goods',
+
+    components: {
+      ShopCart
+    },
 
     data() {
       return {

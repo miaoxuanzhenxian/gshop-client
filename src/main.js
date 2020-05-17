@@ -8,6 +8,8 @@ import router from './router'
 import store from './store'
 import Header from './components/Header/Header'
 import Star from './components/Star/Star'
+import CartControl from './components/CartControl/CartControl'
+
 import './assets/styles/reset.css'
 import './assets/js/validate.js'
 
@@ -17,7 +19,8 @@ Vue.config.productionTip = false // 设置为false以阻止vue在启动时生成
 // 注册全局组件
 Vue.component('Header', Header)
 Vue.component('Star', Star)
-Vue.component(Button.name, Button)
+Vue.component(Button.name, Button) // mt-button
+Vue.component('CartControl', CartControl)
 
 /* 解决引入使用fastclick插件库后在苹果移动端浏览器上输入框(包括input和textarea)点击无响应问题的bug，即会产生输入框(包括input和textarea)点击无法获取焦点问题，只有双击或者长按的时候才能使input或textarea输入框获取到焦点的bug */
 FastClick.prototype.focus = function(targetElement) {

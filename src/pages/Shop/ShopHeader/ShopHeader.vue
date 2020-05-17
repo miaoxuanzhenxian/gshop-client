@@ -431,12 +431,12 @@
       width 100%
       height 100%
       z-index 99
-      &.fade-enter-active, &.fade-leave-active
-        transition opacity .5s
+      &.fade-enter-active, &.fade-leave-active // 过渡的类名
+        transition opacity .5s // 写过度样式
         .activity-sheet-content
           transition transform .5s
-      &.fade-enter, &.fade-leave-to
-        opacity 0
+      &.fade-enter, &.fade-leave-to // 隐藏时的类名
+        opacity 0 // 写隐藏时的样式
         .activity-sheet-content
           transform translateY(100%)
       .activity-sheet-content
