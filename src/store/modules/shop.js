@@ -26,7 +26,20 @@ const state = {
 
 const mutations = {
   [RECEIVE_GOODS](state, { goods }) {
+    
+    if (state.cartFoods.length > 0) {
+      goods.forEach(good => {
+        good.foods.forEach(food => {
+          const fo = state.cartFoods.find(f => f.name === food.name)
+          
+          if (fo) {
+            food.count = fo.count
+          }
+        })
+      })
+    }
     state.goods = goods
+    
   },
   [RECEIVE_RATINGS](state, { ratings }) {
     state.ratings = ratings
@@ -55,7 +68,7 @@ const mutations = {
         state.cartFoods.splice(state.cartFoods.indexOf(food), 1)
       }
     }
-  },
+  }
 }
 
 const actions = {
@@ -124,6 +137,16 @@ const getters = {
 
   //   return arr
   // }
+
+  // 总数量
+  totalCount(state) {
+    return state.cartFoods.reduce((pre, food) => pre + food.count, 0)
+  },
+
+  // 总价格
+  totalPrice(state) {
+    return state.cartFoods.reduce((pre, food) => pre + food.count * food.price, 0)
+  }
 }
 
 export default {

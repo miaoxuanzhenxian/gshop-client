@@ -1,10 +1,10 @@
 <template>
   <div class="cartcontrol">
     <transition name="move">
-      <div class="iconfont icon-remove_circle_outline" v-if="food.count > 0" @click="updateFoodCount(false)"></div>
+      <div class="iconfont icon-remove_circle_outline" v-if="food.count > 0" @click.stop="updateFoodCount(false)"></div>
     </transition>
     <div class="cart-count" v-if="food.count > 0">{{food.count}}</div>
-    <div class="iconfont icon-add_circle" @click="updateFoodCount(true)"></div>
+    <div class="iconfont icon-add_circle" @click.stop="updateFoodCount(true)"></div><!-- @click.stop表示阻止单击事件继续传播，防止bug -->
   </div>
 
 </template>
@@ -44,7 +44,7 @@
       font-size 24px
       color $green
       &.move-enter-active, &.move-leave-active // 过渡的类名
-        transition all .5s // 写过度样式
+        transition all .5s // 写过度样式，通常使用transition
       &.move-enter, &.move-leave-to // 隐藏时的类名
         opacity 0 // 写隐藏时的样式
         transform translateX(15px) rotate(180deg)

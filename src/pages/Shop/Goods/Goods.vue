@@ -3,7 +3,7 @@
     <div class="menu-wrapper" ref="leftWrapper">
       <ul>
         <li class="menu-item" :class="{current: index === currentIndex}"  
-          v-for="(good, index) in goods" :key="good.name" ref="menuItems" @click="selectMenuItem(index)">
+          v-for="(good, index) in goods" :key="good.name" ref="menuItems" @click.stop="selectMenuItem(index)"><!-- @click.stop表示阻止单击事件继续传播，防止bug -->
           <span class="text border-1px">
             <img class="icon" v-if="good.icon" :src="good.icon">
             {{good.name}}
@@ -40,7 +40,8 @@
         </li>
       </ul>
     </div>
-
+    
+    <!-- 购物车 -->
     <ShopCart />
   </div>
 </template>
