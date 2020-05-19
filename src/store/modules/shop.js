@@ -26,20 +26,18 @@ const state = {
 
 const mutations = {
   [RECEIVE_GOODS](state, { goods }) {
-    
-    if (state.cartFoods.length > 0) {
-      goods.forEach(good => {
-        good.foods.forEach(food => {
-          const fo = state.cartFoods.find(f => f.name === food.name)
+    // if (state.cartFoods.length > 0) {
+    //   goods.forEach(good => {
+    //     good.foods.forEach(food => {
+    //       const fo = state.cartFoods.find(f => f.name === food.name)
           
-          if (fo) {
-            food.count = fo.count
-          }
-        })
-      })
-    }
+    //       if (fo) {
+    //         food.count = fo.count
+    //       }
+    //     })
+    //   })
+    // }
     state.goods = goods
-    
   },
   [RECEIVE_RATINGS](state, { ratings }) {
     state.ratings = ratings

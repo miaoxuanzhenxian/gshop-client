@@ -87,6 +87,11 @@
       }
     },
 
+    beforeDestroy() {
+      this.leftScroll.destroy() // 销毁 better-scroll，解绑事件。
+      this.rightScroll.destroy() // 销毁 better-scroll，解绑事件。
+    },
+
     watch: {
       goods() { // goods开始没有数据了，后来有了数据，注意better-scroll老版本需要new BScroll()在对应的状态数据更新且对应的界面更新之后才能正常运行，因此需要watch监测goods这一步; 但在新版本better-scroll中，则已经内部处理了解决了这个问题，因此不再需要new BScroll()在对应的状态数据更新且对应的界面更新之后了，也就不再需要watch监测goods这一步了，因此只需要在mounted生命周期方法中直接new BScroll()即可
         this.$nextTick(() => {
@@ -108,16 +113,24 @@
     methods: {
       // 方法名加下划线是为了与事件回调函数方法相区分
       _initScroll() {
-        this.leftScroll = new BScroll(this.$refs.leftWrapper, {
-          click: true // 分发自定义的click点击事件
-        })
-
-        this.rightScroll = new BScroll(this.$refs.rightWrapper, {
-          click: true, // 分发自定义的click点击事件
-          // probeType: 2 // 触摸滑动  实时(高频)
-          // probeType: 3 // 触摸/惯性/编码滑动  实时(高频)  注：触摸/惯性/编码滑动时都会触发已经监听的scroll事件
-          probeType: 1 // 触摸滑动  非实时(低频)  会减少性能、效率的损耗
-        })
+        if (!this.leftScroll) { // 加个判断，表示如果better-scroll对象已经建立、已经有了，则不再重新建立，以防止better-scroll分发两次自定义的click点击事件，从而导致它及它的子组件中click点击执行两次的bug
+          this.leftScroll = new BScroll(this.$refs.leftWrapper, {
+            click: true // 分发自定义的click点击事件,better-scroll 默认会阻止浏览器的原生 click 事件。当设置为 true，better-scroll 会派发一个 click 事件，我们会给派发的 event 参数加一个私有属性 _constructed，值为 true。
+          })
+        } else {
+          this.leftScroll.refresh() // refresh()重新计算 better-scroll，当 DOM 结构发生变化的时候务必要调用确保滚动的效果正常。
+        }
+        
+        if (!this.rightScroll) { // 加个判断，表示如果better-scroll对象已经建立、已经有了，则不再重新建立，以防止better-scroll分发两次自定义的click点击事件，从而导致它及它的子组件中click点击执行两次的bug
+          this.rightScroll = new BScroll(this.$refs.rightWrapper, {
+            click: true, // 分发自定义的click点击事件,better-scroll 默认会阻止浏览器的原生 click 事件。当设置为 true，better-scroll 会派发一个 click 事件，我们会给派发的 event 参数加一个私有属性 _constructed，值为 true。
+            // probeType: 2 // 触摸滑动  实时(高频)
+            // probeType: 3 // 触摸/惯性/编码滑动  实时(高频)  注：触摸/惯性/编码滑动时都会触发已经监听的scroll事件
+            probeType: 1 // 触摸滑动  非实时(低频)  会减少性能、效率的损耗
+          })
+        } else {
+          this.rightScroll.refresh() // refresh()重新计算 better-scroll，当 DOM 结构发生变化的时候务必要调用确保滚动的效果正常。
+        }
 
         // 给rightScroll绑定scroll的监听
         this.rightScroll.on('scroll', ({ y }) => {
