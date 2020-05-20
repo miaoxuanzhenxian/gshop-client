@@ -19,12 +19,12 @@
         </div>
       </div>
       <transition name="move">
-        <div class="shopcart-list" v-show="isShow">
+        <div class="shopcart-list" v-show="listShow"><!-- 这里不能用v-if只能用v-show，因为v-if会销毁组件和创建组件，而在销毁完组件时，会将new better-scroll对象时加到ul上的用来滑动的style样式(transform: translate())也一起销毁掉；而在v-if又再次为true时，又再次创建组件时，并不会再次new better-scroll对象了，那就不会再向ul上加用来滑动的style样式(transform: translate())了，那自然就不能再滑动了；因此这里只能用v-show而不能用v-if -->
           <div class="list-header">
             <h1 class="title">购物车</h1>
             <span class="empty">清空</span>
           </div>
-          <div class="list-content">
+          <div class="list-content" ref="foods">
             <ul>
               <li class="food border-1px" v-for="food in cartFoods" :key="food.name">
                 <span class="name">{{food.name}}</span>
@@ -38,12 +38,15 @@
         </div>
       </transition>
     </div>
-    <div class="list-mask" v-show="isShow" @click="toggleShow"></div>
+    <transition name="fade">
+      <div class="list-mask" v-show="listShow" @click="toggleShow"></div>
+    </transition>
   </div>
 </template>
 
 <script>
   import { mapState, mapGetters } from 'vuex'
+  import BScroll from 'better-scroll'
 
   export default {
     name: 'ShopCart',
@@ -83,12 +86,46 @@
         } else {
           return '去结算'
         }
+      },
+
+      // 列表是否显示
+      listShow() {
+        if (this.totalCount === 0) {
+          // eslint-disable-next-line vue/no-side-effects-in-computed-properties
+          this.isShow = false
+          return false
+        }
+
+        // 如果列表显示了，创建滚动对象
+        if (this.isShow) {
+          this.$nextTick(() => {
+            /* 
+              单例对象: 单一的实例对象
+              1. 创建对象前: 判断对象不存在才去创建
+              2. 创建对象后: 保存创建的对象
+            */
+            if (!this.scroll) { // 第一次打开
+              this.scroll = new BScroll(this.$refs.foods, {
+                click: true
+              })
+              this.$once('hook:beforeDestroy', () => {
+                this.scroll.destroy()
+              })
+            } else { // 再次打开
+              this.scroll.refresh() // 让滚动对象刷新: 重新计算 better-scroll，重新统计内容的高度，当 DOM 结构发生变化的时候务必要调用确保滚动的效果正常。
+            }
+          })
+        }
+
+        return this.isShow
       }
     },
 
     methods: {
       toggleShow() {
-        this.isShow = !this.isShow
+        if (this.totalCount > 0) {
+          this.isShow = !this.isShow
+        }
       }
     }
   }
@@ -225,34 +262,35 @@
             top 100%
             border-bottom 1px solid rgba(7, 17, 27, 0.1)
           .name
-            line-height: 24px
-            font-size: 14px
-            color: rgb(7, 17, 27)
+            line-height 24px
+            font-size 14px
+            color rgb(7, 17, 27)
           .price
-            position: absolute
-            right: 90px
-            bottom: 12px
-            line-height: 24px
-            font-size: 14px
-            font-weight: 700
-            color: rgb(240, 20, 20)
+            position absolute
+            right 90px
+            bottom 12px
+            line-height 24px
+            font-size 14px
+            font-weight 700
+            color rgb(240, 20, 20)
           .cartcontrol-wrapper
-            position: absolute
-            right: 0
-            bottom: 6px
+            position absolute
+            right 0
+            bottom 6px
 
   .list-mask
-    position: fixed
-    top: 0
-    left: 0
-    width: 100%
-    height: 100%
-    z-index: 40
-    backdrop-filter: blur(10px)
-    opacity: 1
-    background: rgba(7, 17, 27, 0.6)
+    position fixed
+    top 0
+    left 0
+    width 100%
+    height 100%
+    z-index 40
+    backdrop-filter blur(10px)
+    opacity 1
+    backdrop-filter: blur()
+    background rgba(7, 17, 27, 0.6)
     &.fade-enter-active, &.fade-leave-active
-      transition: all 0.5s
+      transition opacity .5s
     &.fade-enter, &.fade-leave-to
-      opacity: 0
+      opacity 0
 </style>

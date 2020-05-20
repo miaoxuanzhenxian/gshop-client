@@ -118,7 +118,7 @@
             click: true // 分发自定义的click点击事件,better-scroll 默认会阻止浏览器的原生 click 事件。当设置为 true，better-scroll 会派发一个 click 事件，我们会给派发的 event 参数加一个私有属性 _constructed，值为 true。
           })
         } else {
-          this.leftScroll.refresh() // refresh()重新计算 better-scroll，当 DOM 结构发生变化的时候务必要调用确保滚动的效果正常。
+          this.leftScroll.refresh() // refresh()重新刷新、重新计算 better-scroll，重新统计内容的高度，当 DOM 结构发生变化的时候务必要调用确保滚动的效果正常。
         }
         
         if (!this.rightScroll) { // 加个判断，表示如果better-scroll对象已经建立、已经有了，则不再重新建立，以防止better-scroll分发两次自定义的click点击事件，从而导致它及它的子组件中click点击执行两次的bug
@@ -129,7 +129,7 @@
             probeType: 1 // 触摸滑动  非实时(低频)  会减少性能、效率的损耗
           })
         } else {
-          this.rightScroll.refresh() // refresh()重新计算 better-scroll，当 DOM 结构发生变化的时候务必要调用确保滚动的效果正常。
+          this.rightScroll.refresh() // refresh()重新刷新、重新计算 better-scroll，重新统计内容的高度，当 DOM 结构发生变化的时候务必要调用确保滚动的效果正常。
         }
 
         // 给rightScroll绑定scroll的监听
