@@ -7,7 +7,8 @@ import {
   RECEIVE_RATINGS,
   RECEIVE_INFO,
   ADD_FOOD_COUNT,
-  REDUCE_FOOD_COUNT
+  REDUCE_FOOD_COUNT,
+  CLEAR_CART
 } from '../mutation-types'
 
 import {
@@ -62,10 +63,17 @@ const mutations = {
       food.count--
       // 一旦数量减为0, 从cartFoods中移除此food
       if (food.count === 0) {
-        delete food.count // 解决当food.count减为0后，再次变为1时，不能添加到cartFoods中,即不能添加到购物车中的bug
         state.cartFoods.splice(state.cartFoods.indexOf(food), 1)
       }
     }
+  },
+  [CLEAR_CART](state) {
+    // 將购物车中所有food的count属性移除
+    state.cartFoods.forEach(food => {
+      food.count = 0
+    })
+    // 清空购物车数组
+    state.cartFoods = []
   }
 }
 

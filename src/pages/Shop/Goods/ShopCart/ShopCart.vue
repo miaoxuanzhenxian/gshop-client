@@ -22,7 +22,7 @@
         <div class="shopcart-list" v-show="listShow"><!-- 这里不能用v-if只能用v-show，因为v-if会销毁组件和创建组件，而在销毁完组件时，会将new better-scroll对象时加到ul上的用来滑动的style样式(transform: translate())也一起销毁掉；而在v-if又再次为true时，又再次创建组件时，并不会再次new better-scroll对象了，那就不会再向ul上加用来滑动的style样式(transform: translate())了，那自然就不能再滑动了；因此这里只能用v-show而不能用v-if -->
           <div class="list-header">
             <h1 class="title">购物车</h1>
-            <span class="empty">清空</span>
+            <span class="empty" @click="clearCart">清空</span>
           </div>
           <div class="list-content" ref="foods">
             <ul>
@@ -47,6 +47,8 @@
 <script>
   import { mapState, mapGetters } from 'vuex'
   import BScroll from 'better-scroll'
+  import { MessageBox } from 'mint-ui'
+  import { CLEAR_CART } from '@/store/mutation-types'
 
   export default {
     name: 'ShopCart',
@@ -112,7 +114,7 @@
                 this.scroll.destroy()
               })
             } else { // 再次打开
-              this.scroll.refresh() // 让滚动对象刷新: 重新计算 better-scroll，重新统计内容的高度，当 DOM 结构发生变化的时候务必要调用确保滚动的效果正常。
+              this.scroll.refresh() // 让滚动对象刷新: 重新计算 better-scroll，重新统计内容的高度，来决定要不要形成滑动,当 DOM 结构发生变化的时候务必要调用确保滚动的效果正常。
             }
           })
         }
@@ -126,6 +128,18 @@
         if (this.totalCount > 0) {
           this.isShow = !this.isShow
         }
+      },
+
+      /*
+        清空购物车
+      */
+      clearCart() {
+        MessageBox.confirm('确定清除吗?').then(
+          () => {
+            this.$store.commit('shop/' + CLEAR_CART)
+          },
+          () => {}
+        )
       }
     }
   }
