@@ -1,48 +1,53 @@
 <template>
-  <div class="goods">
-    <div class="menu-wrapper" ref="leftWrapper">
-      <ul>
-        <li class="menu-item" :class="{current: index === currentIndex}"  
-          v-for="(good, index) in goods" :key="good.name" ref="menuItems" @click.stop="selectMenuItem(index)"><!-- @click.stop表示阻止单击事件继续传播，防止bug -->
-          <span class="text border-1px">
-            <img class="icon" v-if="good.icon" :src="good.icon">
-            {{good.name}}
-          </span>
-        </li>
-      </ul>
-    </div>
+  <div>
+    <div class="goods">
+      <div class="menu-wrapper" ref="leftWrapper">
+        <ul>
+          <li class="menu-item" :class="{current: index === currentIndex}"  
+            v-for="(good, index) in goods" :key="good.name" ref="menuItems" @click.stop="selectMenuItem(index)"><!-- @click.stop表示阻止单击事件继续传播，防止bug -->
+            <span class="text border-1px">
+              <img class="icon" v-if="good.icon" :src="good.icon">
+              {{good.name}}
+            </span>
+          </li>
+        </ul>
+      </div>
 
-    <div class="foods-wrapper" ref="rightWrapper">
-      <ul ref="rightUl" id="testaa">
-        <li class="food-list-hook" v-for="good in goods" :key="good.name" ref="foodList">
-          <h1 class="title">{{good.name}}</h1>
-          <ul ref="">
-            <li class="food-item border-1px" v-for="food in good.foods" :key="food.name">
-              <div class="icon">
-                <img width="57" height="57" :src="food.icon">
-              </div>
-              <div class="content">
-                <h2 class="name">{{food.name}}</h2>
-                <p class="desc">{{food.description}}</p>
-                <div class="extra">
-                  <span class="count">月售{{food.sellCount}}份</span>
-                  <span>好评率{{food.rating}}%</span></div>
-                <div class="price">
-                  <span class="now">￥{{food.price}}</span>
-                  <span class="old" v-if="food.oldPrice">￥{{food.oldPrice}}</span>
+      <div class="foods-wrapper" ref="rightWrapper">
+        <ul ref="rightUl" id="testaa">
+          <li class="food-list-hook" v-for="good in goods" :key="good.name" ref="foodList">
+            <h1 class="title">{{good.name}}</h1>
+            <ul ref="">
+              <li class="food-item border-1px" v-for="food in good.foods" 
+                :key="food.name" @click="showFood(food)">
+                <div class="icon">
+                  <img width="57" height="57" :src="food.icon">
                 </div>
-                <div class="cartcontrol-wrapper">
-                  <CartControl :food="food" />
+                <div class="content">
+                  <h2 class="name">{{food.name}}</h2>
+                  <p class="desc">{{food.description}}</p>
+                  <div class="extra">
+                    <span class="count">月售{{food.sellCount}}份</span>
+                    <span>好评率{{food.rating}}%</span></div>
+                  <div class="price">
+                    <span class="now">￥{{food.price}}</span>
+                    <span class="old" v-if="food.oldPrice">￥{{food.oldPrice}}</span>
+                  </div>
+                  <div class="cartcontrol-wrapper">
+                    <CartControl :food="food" />
+                  </div>
                 </div>
-              </div>
-            </li>
-          </ul>
-        </li>
-      </ul>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </div>
+      
+      <!-- 购物车 -->
+      <ShopCart />
     </div>
     
-    <!-- 购物车 -->
-    <ShopCart />
+    <Food ref="food" :food="food" />
   </div>
 </template>
 
@@ -51,18 +56,21 @@
   import BScroll from 'better-scroll'
 
   import ShopCart from './ShopCart/ShopCart'
+  import Food from './Food/Food'
 
   export default {
     name: 'Goods',
 
     components: {
-      ShopCart
+      ShopCart,
+      Food
     },
 
     data() {
       return {
         scrollY: 0, // 右侧滑动的y轴坐标: scrollY, 初始为0, 滑动右侧过程中实时改变、更新 
-        tops: [] // 右侧所有分类li的top的数组: tops, 初始值为[], 在列表显示之后统计一次即可
+        tops: [], // 右侧所有分类li的top的数组: tops, 初始值为[], 在列表显示之后统计一次即可
+        food: {} // 需要显示的food
       }
     },
 
@@ -179,7 +187,16 @@
 
         // 让右侧列表滑动到对应位置
         this.rightScroll.scrollTo(0, -top, 300)
-      }
+      },
+
+      /*
+        显示指定的food
+      */
+      showFood(food) {
+        this.food = food
+        // 显示food组件界面
+        this.$refs.food.toggleShow()
+      }  
     }
   }
 </script>
