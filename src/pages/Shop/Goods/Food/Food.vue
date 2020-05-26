@@ -3,7 +3,7 @@
     <div class="food" v-show="isShow">
       <div class="food-content">
         <div class="image-header">
-          <img :src="food.image">
+          <img v-if="isShow" v-lazy="food.image">
           <p class="foodpanel-desc">{{food.info}}</p>
           <div class="back" @click="toggleShow">
             <i class="iconfont icon-left-arrow"></i>
@@ -57,7 +57,7 @@
     left: 0
     top: 0
     bottom: 48px
-    z-index: 101
+    z-index: 999
     width: 100%
     &.fade-enter-active, &.fade-leave-active
       transition opacity .3s
