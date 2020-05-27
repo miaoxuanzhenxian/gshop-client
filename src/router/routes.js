@@ -3,6 +3,10 @@
 */
 import lazyLoadView from '../utils/lazyLoadView'
 import NotFound from '../pages/NotFound/NotFound'
+import A from '../pages/test/A/A'
+import B from '../pages/test/B/B'
+import B1 from '../pages/test/B/B1/B1'
+import B2 from '../pages/test/B/B2/B2'
 
 
 /* 
@@ -86,6 +90,24 @@ export default [
         // redirect: '/shop/:id/goods'
         path: '',
         redirect: 'goods'
+      }
+    ]
+  },
+  {
+    path: '/a',
+    component: A
+  },
+  {
+    path: '/b',
+    component: B,
+    children: [
+      {
+        path: 'b1',
+        component: B1
+      },
+      {
+        path: 'b2',
+        component: B2
       }
     ]
   },
