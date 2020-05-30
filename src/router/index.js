@@ -19,7 +19,6 @@ const router = new VueRouter({ // 配置对象
 const paths = ['/a', '/b']
 
 // 定义全局前置守卫
-// eslint-disable-next-line no-unused-vars
 router.beforeEach((to, from, next) => {
   const path = to.path
   // 如果目标path是需要检查的路由路径, 判断用户如果不存在，跳转到登陆界面

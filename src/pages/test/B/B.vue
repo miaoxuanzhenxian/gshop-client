@@ -10,8 +10,10 @@
         <router-link to="/b/b2" exact replace>b222</router-link>
       </div>
     </div>
-
-    <router-view />
+    
+    <keep-alive>
+      <router-view />
+    </keep-alive>
 
   </div>
 </template>

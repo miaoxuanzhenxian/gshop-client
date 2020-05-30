@@ -7,6 +7,7 @@ import A from '../pages/test/A/A'
 import B from '../pages/test/B/B'
 import B1 from '../pages/test/B/B1/B1'
 import B2 from '../pages/test/B/B2/B2'
+// import Login from '../pages/Login/Login'
 
 
 /* 
@@ -28,7 +29,8 @@ const MSite = () => lazyLoadView(import('../pages/MSite/MSite'))
 const Search = () => lazyLoadView(import('../pages/Search/Search'))
 const Order = () => lazyLoadView(import('../pages/Order/Order'))
 const Profile = () => lazyLoadView(import('../pages/Profile/Profile'))
-const Login = () => lazyLoadView(import('../pages/Login/Login'))
+// const Login = () => lazyLoadView(import('../pages/Login/Login')) // todo 为什么这个方式beforeRouteEnter组件内前置守卫失效
+const Login = () => import('../pages/Login/Login')
 const Shop = () => lazyLoadView(import('../pages/Shop/Shop'))
 const Goods = () => lazyLoadView(import('../pages/Shop/Goods/Goods'))
 const Ratings = () => lazyLoadView(import('../pages/Shop/Ratings/Ratings'))
