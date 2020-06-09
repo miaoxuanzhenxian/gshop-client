@@ -144,14 +144,32 @@ const getters = {
   //   return arr
   // }
 
-  // 总数量
+  /*
+    总数量
+  */
   totalCount(state) {
     return state.cartFoods.reduce((pre, food) => pre + food.count, 0)
   },
 
-  // 总价格
+  /*
+    总价格
+  */
   totalPrice(state) {
     return state.cartFoods.reduce((pre, food) => pre + food.count * food.price, 0)
+  },
+
+  /*
+    总商家评论数
+  */
+  totalRatingsCount(state) {
+    return state.ratings.length
+  },
+
+  /*
+    总商家推荐评论数
+  */
+  positiveRatingsCount(state) {
+    return state.ratings.reduce((pre, rating) => pre + (rating.rateType === 0 ? 1 : 0), 0)
   }
 }
 
