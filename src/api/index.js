@@ -102,6 +102,19 @@ export const reqShopGoods = (id) => ajax('/shop_goods', {
   }
 })
 
+/*
+  11. 根据经纬度和关键字搜索商铺列表
+*/
+export const reqSearchShops = (geohash, keyword) => ajax('/search_shops', {
+  params: {
+    geohash,
+    keyword
+  },
+  headers: {
+    needToken: true
+  }
+})
+
 // export const reqBaiDuXxx = () => ajax(BASE2 + '/xxx') // 练习使用代理解决ajax跨域问题，另一个后台服务器(http://www.baidu.com)
 
 // // 简单的测试一下接口请求函数

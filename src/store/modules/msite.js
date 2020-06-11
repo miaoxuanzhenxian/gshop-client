@@ -4,13 +4,16 @@
 import {
   RECEIVE_ADDRESS,
   RECEIVE_CATEGORYS,
-  RECEIVE_SHOPS
+  RECEIVE_SHOPS,
+  RECEIVE_SEARCH_SHOPS,
+  CLEAR_SEARCH_SHOPS
 } from '../mutation-types'
 
 import {
   reqAddress,
   reqCategorys,
-  reqShops
+  reqShops,
+  reqSearchShops
 } from '@/api'
 
 
@@ -19,7 +22,8 @@ const state = {
   latitude: 40.10038, // 纬度
   address: {}, // 地址信息对象
   categorys: [], // 食品分类列表
-  shops: [] // 商铺列表
+  shops: [], // 商铺列表
+  searchShops: [] // 搜索得到的商家列表
 }
 
 const mutations = {
@@ -31,6 +35,12 @@ const mutations = {
   },
   [RECEIVE_SHOPS](state, shops) {
     state.shops = shops
+  },
+  [RECEIVE_SEARCH_SHOPS](state, { searchShops }) {
+    state.searchShops = searchShops
+  },
+  [CLEAR_SEARCH_SHOPS](state) {
+    state.searchShops = []
   }
 }
 
@@ -92,6 +102,25 @@ const actions = {
       const shops = result.data
       commit(RECEIVE_SHOPS, shops)
     }
+  },
+
+  /*
+    获取搜索商铺列表的异步action
+  */
+  async getSearchShops({commit, state}, { keyword }) {
+    const geohash = state.latitude + ',' + state.longitude
+    const result = await reqSearchShops(geohash, keyword)
+    if (result.code === 0) {
+      const searchShops = result.data
+      commit(RECEIVE_SEARCH_SHOPS, { searchShops })
+    }
+  },
+
+  /*
+    清除搜索商铺列表数据
+  */
+  async clearSearchShops({ commit }) {
+    commit(CLEAR_SEARCH_SHOPS)
   }
 }
 
