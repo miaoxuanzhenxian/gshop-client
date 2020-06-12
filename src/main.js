@@ -12,6 +12,7 @@ import Header from './components/Header/Header'
 import Star from './components/Star/Star'
 import CartControl from './components/CartControl/CartControl'
 import Split from './components/Split/Split'
+import './filters' // 加载过滤器
 
 import './assets/styles/reset.css'
 import './assets/js/validate.js'

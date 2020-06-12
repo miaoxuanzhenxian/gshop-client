@@ -19,6 +19,7 @@
     "fastclick": "^1.0.6",
     "mint-ui": "^2.2.13",
     "mockjs": "^1.1.0",
+    "moment": "^2.26.0",
     "swiper": "^5.3.8",
     "vee-validate": "^3.3.0",
     "vue": "^2.6.11",
