@@ -17,7 +17,7 @@
         <ul ref="rightUl" id="testaa">
           <li class="food-list-hook" v-for="good in goods" :key="good.name" ref="foodList">
             <h1 class="title">{{good.name}}</h1>
-            <ul ref="">
+            <ul>
               <li class="food-item border-1px" v-for="food in good.foods" 
                 :key="food.name" @click="showFood(food)">
                 <div class="icon">

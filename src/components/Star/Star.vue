@@ -27,7 +27,7 @@
           arr.push('on')
         }
         // 向arr中添加0/1个'half'
-        if (score * 10 - scoreInteger * 10 >= 5) {
+        if (score * 10 - scoreInteger * 10 >= 5) { // 因为若小数参与运算，则可能会有误差，因此*10换算为整数进行计算
           arr.push('half')
         }
         // 向arr中添加m个'off'

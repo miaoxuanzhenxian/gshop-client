@@ -40,6 +40,16 @@
       this.$store.dispatch('shop/getShopGoods', { id })
       this.$store.dispatch('shop/getShopRatings', { id })
       this.$store.dispatch('shop/getShopInfo', { id })
+    },
+
+    beforeRouteEnter(to, from, next) {
+      next(component => {
+        if (!component.$store.state.user.token) {
+          next('/login')
+        } else {
+          next()
+        }
+      })
     }
   }
 </script>

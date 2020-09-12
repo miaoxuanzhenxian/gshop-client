@@ -2,13 +2,12 @@
   配置应用中所有路由
 */
 import lazyLoadView from '../utils/lazyLoadView'
+import Login from '../pages/Login/Login'
 import NotFound from '../pages/NotFound/NotFound'
 import A from '../pages/test/A/A'
 import B from '../pages/test/B/B'
 import B1 from '../pages/test/B/B1/B1'
 import B2 from '../pages/test/B/B2/B2'
-// import Login from '../pages/Login/Login'
-
 
 /* 
 路由组件懒加载:
@@ -26,12 +25,13 @@ import B2 from '../pages/test/B/B2/B2'
 */
 // 路由的懒加载，解决首屏加载过慢的问题
 const MSite = () => lazyLoadView(import('../pages/MSite/MSite'))
-const Search = () => lazyLoadView(import('../pages/Search/Search'))
+const Search = () => import('../pages/Search/Search')
+// const Search = () => lazyLoadView(import('../pages/Search/Search')) // 此种方式的路由组件内的守卫会失效
+
 const Order = () => lazyLoadView(import('../pages/Order/Order'))
 const Profile = () => lazyLoadView(import('../pages/Profile/Profile'))
-// const Login = () => lazyLoadView(import('../pages/Login/Login')) // todo 为什么这个方式beforeRouteEnter组件内前置守卫失效
-const Login = () => import('../pages/Login/Login')
-const Shop = () => lazyLoadView(import('../pages/Shop/Shop'))
+const Shop = () => import('../pages/Shop/Shop')
+// const Shop = () => lazyLoadView(import('../pages/Shop/Shop')) // 此种方式的路由组件内的守卫会失效
 const Goods = () => lazyLoadView(import('../pages/Shop/Goods/Goods'))
 const Ratings = () => lazyLoadView(import('../pages/Shop/Ratings/Ratings'))
 const Info = () => lazyLoadView(import('../pages/Shop/Info/Info'))
@@ -49,7 +49,11 @@ export default [
     component: Search,
     meta: {
       isShowFooter: true
-    }
+    },
+    // beforeEnter: (to, from, next) => { // 路由独享的守卫, 有且仅有beforeEnter这一个路由独享的守卫(它是进入路由之前的路由独享的守卫)，没有离开路由之前的路由独享的守卫
+    //   console.log('search-enter')
+    //   next()
+    // }
   },
   {
     path: '/order',

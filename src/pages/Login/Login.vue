@@ -16,9 +16,9 @@
                 <section class="login-message first-login-message">
                   <input type="tel" maxlength="11" placeholder="手机号" v-model="phone">
                   <button
-                    :disabled="!isRightPhone || computeTime > 0" 
+                    :disabled="!valid || computeTime > 0" 
                     class="get-verification btn" 
-                    :class="{'right-phone-number': isRightPhone}"
+                    :class="{'right-phone-number': valid}"
                     @click.prevent="sendSmsCode"
                   >
                     {{computeTime > 0 ? `短信已发送(${computeTime}s)` : '获取验证码'}}
@@ -97,11 +97,11 @@
       }
     },
 
-    computed: {
+    /* computed: {
       isRightPhone() {
         return /^1[3-9]\d{9}$/.test(this.phone)
       }
-    },
+    }, */
 
     methods: {
       /*
@@ -158,6 +158,8 @@
           let result
           if (loginType) { // 短信登录
             result = await reqSmsLogin(phone, code)
+            // 在请求完成后停止计时
+            this.computeTime = 0
           } else { // 密码登录
             result = await reqPwdLogin({ name, pwd, captcha })
             // 如果登录失败，更新一下图形验证码，并清除输入
@@ -186,7 +188,7 @@
     // 但可以通过next(component => {}), 在回调函数中访问组件对象
     beforeRouteEnter(to, from, next) {
       next(component => { // 将函数延迟到(当前)组件对象创建之后执行, 且传递(传入)(当前)组件对象,用形参component接收
-        if (component.$store.state.user.user._id) { // 如果用户已经登陆, 跳转到个人中心，否则放行
+        if (component.$store.state.user.token) { // 如果用户已经登陆, 跳转到个人中心，否则放行
           next('/profile')
         } else {
           next() 

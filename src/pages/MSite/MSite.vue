@@ -3,13 +3,16 @@
     <!-- 首页头部 -->
     <Header :title="address.name || '正在定位中...'">
       <template #left>
-        <span class="header-search">
+        <span @click="$router.push('/search')" exact class="header-search">
           <i class="iconfont icon-sousuo"></i>
         </span>
       </template>
       <template v-slot:right>
-        <span class="header-login">
-          <span>登录|注册</span>
+        <span @click="$router.push(user._id ? '/userInfo' : '/login')" class="header-login">
+          <span v-if="user._id">
+            <i class="iconfont icon-person"></i>
+          </span>
+          <span v-else>登录|注册</span>
         </span>
       </template>
     </Header>
@@ -40,7 +43,7 @@
 
 <script>
   import { mapState } from 'vuex'
-  import { chunk } from 'lodash'
+  import chunk from 'lodash/chunk'
   import Swiper from 'swiper'
   import 'swiper/css/swiper.css'
   import Shops from './Shops/Shops'
@@ -61,7 +64,8 @@
     computed: {
       ...mapState({
         address: state => state.msite.address, // 函数的返回值作为属性值
-        categorys: state => state.msite.categorys
+        categorys: state => state.msite.categorys,
+        user: state => state.user.user
       }),
 
       /*
