@@ -103,7 +103,7 @@
             onlyShowText: true/false
             text: 有值/没值
 
-            onlyShowText===false || text.length>0
+            onlyShowText===false || text.length>0   即为 !onlyShowText || text.length>0
           */
         
           return (selectType === -1 || selectType === rateType) && (!onlyShowText || text.length>0)
