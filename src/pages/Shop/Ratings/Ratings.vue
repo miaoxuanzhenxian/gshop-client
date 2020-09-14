@@ -27,6 +27,7 @@
       <Split />
 
       <RatingsFilter :onlyShowText="onlyShowText" :selectType="selectType" />
+      <!-- <RatingsFilter :onlyShowText="onlyShowText" :selectType="selectType" :setSelectType="setSelectType" :toggleOnlyText="toggleOnlyText" /> --> <!-- 通过传回调函数的方式实现子向父通信 -->
 
       <div class="rating-wrapper">
         <ul>
@@ -56,7 +57,7 @@
 
 <script>
   import { mapState } from 'vuex'
-  import BScroll from 'better-scroll'
+  import BScroll from '@better-scroll/core'
 
   import RatingsFilter from './RatingsFilter/RatingsFilter'
 

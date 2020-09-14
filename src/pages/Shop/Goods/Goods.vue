@@ -53,7 +53,7 @@
 
 <script>
   import { mapState } from 'vuex'
-  import BScroll from 'better-scroll'
+  import BScroll from '@better-scroll/core'
 
   import ShopCart from './ShopCart/ShopCart'
   import Food from './Food/Food'

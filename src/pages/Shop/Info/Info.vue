@@ -68,7 +68,7 @@
 
 <script>
   import { mapState } from 'vuex'
-  import BScroll from 'better-scroll'
+  import BScroll from '@better-scroll/core'
 
   export default {
     name: 'Info',
@@ -102,7 +102,7 @@
     methods: {
       _initScroll() {
         // 整体垂直滑动
-        if (!this.scroll) {
+        if (!this.verticalScroll) {
           this.verticalScroll = new BScroll(this.$refs.shopInfo, {
             click: true
           })

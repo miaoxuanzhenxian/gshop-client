@@ -787,6 +787,18 @@
     lodash "^4.17.13"
     to-fast-properties "^2.0.0"
 
+"@better-scroll/core@^2.0.3":
+  version "2.0.3"
+  resolved "https://registry.yarnpkg.com/@better-scroll/core/-/core-2.0.3.tgz#467cad0bebac01ba8766e985ea5e4e70cfa313b8"
+  integrity sha512-SCRs2dgOoBM2vOvDyRsxpXQAI3eDeibnUQYsmLDIp3XU3MFbBviBPhuoAtIH/87ZwtUIot7AfUu3RU5rOn/fsg==
+  dependencies:
+    "@better-scroll/shared-utils" "^2.0.3"
+
+"@better-scroll/shared-utils@^2.0.3":
+  version "2.0.3"
+  resolved "https://registry.yarnpkg.com/@better-scroll/shared-utils/-/shared-utils-2.0.3.tgz#9e0a061f0519ee6d86f66b2f36b2b863a664f131"
+  integrity sha512-FvIQbMStd6mfEyF0ptI1fCIJn/a8OakcCaYhE6yH2JMVln2t3Vv72VosorQPKPgmiS1krDOh8PP6FyCKNtKxoQ==
+
 "@hapi/address@2.x.x":
   version "2.1.4"
   resolved "https://registry.yarnpkg.com/@hapi/address/-/address-2.1.4.tgz#5d67ed43f3fd41a69d4b9ff7b56e7c0d1d0a81e5"
@@ -1622,7 +1634,7 @@ babel-plugin-dynamic-import-node@^2.3.0:
   dependencies:
     object.assign "^4.1.0"
 
-babel-runtime@^6.0.0, babel-runtime@^6.23.0:
+babel-runtime@^6.23.0:
   version "6.26.0"
   resolved "https://registry.yarnpkg.com/babel-runtime/-/babel-runtime-6.26.0.tgz#965c7058668e82b55d7bfe04ff2337bc8b5647fe"
   integrity sha1-llxwWGaOgrVde/4E/yM3vItWR/4=
@@ -1674,13 +1686,6 @@ bcrypt-pbkdf@^1.0.0:
   integrity sha1-pDAdOJtqQ/m2f/PKEaP2Y342Dp4=
   dependencies:
     tweetnacl "^0.14.3"
-
-better-scroll@^1.15.2:
-  version "1.15.2"
-  resolved "https://registry.yarnpkg.com/better-scroll/-/better-scroll-1.15.2.tgz#65ffc6058b8b4ff337b8dfad4bcb334d7699ceb6"
-  integrity sha512-sSY2N8I9/B+YX/9JpIz6pMQYnmBuvspBqZG4UxYaQEfz/ZWrnxwdyKLL4t6IKpFmxqtZadVypXw7vSSHxBZpBQ==
-  dependencies:
-    babel-runtime "^6.0.0"
 
 bfj@^6.1.1:
   version "6.1.2"

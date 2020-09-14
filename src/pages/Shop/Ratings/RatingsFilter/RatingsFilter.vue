@@ -1,5 +1,6 @@
 <template>
   <div class="ratings-filter">
+    <!-- 通过事件总线的方式实现子向父通信 -->
     <div class="rating-type">
       <span class="block" :class="{active: selectType === -1}" @click="setType(-1)">
         全部<span class="count">{{totalRatingsCount}}</span>
@@ -15,6 +16,23 @@
       <span class="iconfont icon-check_circle"></span>
       <span class="text">只看有内容的评价</span>
     </div>
+
+    <!-- 通过传回调函数的方式实现子向父通信 -->
+    <!-- <div class="rating-type">
+      <span class="block" :class="{active: selectType === -1}" @click="setSelectType(-1)">
+        全部<span class="count">{{totalRatingsCount}}</span>
+      </span>
+      <span class="block" :class="{active: selectType === 0}" @click="setSelectType(0)">
+        推荐<span class="count">{{positiveRatingsCount}}</span>
+      </span>
+      <span class="block" :class="{active: selectType === 1}" @click="setSelectType(1)">
+        吐槽<span class="count">{{totalRatingsCount - positiveRatingsCount}}</span>
+      </span>
+    </div>
+    <div class="switch" :class="{on: onlyShowText}" @click="toggleOnlyText">
+      <span class="iconfont icon-check_circle"></span>
+      <span class="text">只看有内容的评价</span>
+    </div> -->
   </div>
 </template>
 
@@ -26,7 +44,9 @@
 
     props: {
       onlyShowText: Boolean,
-      selectType: Number
+      selectType: Number,
+      // setSelectType: Function, // 通过传回调函数的方式实现子向父通信
+      // toggleOnlyText: Function // 通过传回调函数的方式实现子向父通信
     },
 
     computed: {
@@ -43,7 +63,7 @@
 
       toggoleText() {
         this.$eventBus.$emit('toggleOnlyText')
-      }
+      }      
     }
   }
 </script>

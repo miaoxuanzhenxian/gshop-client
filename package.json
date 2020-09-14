@@ -13,8 +13,8 @@
     "lint": "vue-cli-service lint"
   },
   "dependencies": {
+    "@better-scroll/core": "^2.0.3",
     "axios": "^0.19.2",
-    "better-scroll": "^1.15.2",
     "core-js": "^3.6.4",
     "date-fns": "^2.14.0",
     "fastclick": "^1.0.6",

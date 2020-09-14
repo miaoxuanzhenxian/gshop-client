@@ -46,7 +46,7 @@
 
 <script>
   import { mapState, mapGetters } from 'vuex'
-  import BScroll from 'better-scroll'
+  import BScroll from '@better-scroll/core'
   import { MessageBox } from 'mint-ui'
   import { CLEAR_CART } from '@/store/mutation-types'
 
